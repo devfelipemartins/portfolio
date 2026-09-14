@@ -105,7 +105,7 @@ export default function Navbar() {
       <nav className="nav-inner mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <a href="#topo" className="font-mono text-lg font-bold tracking-tight">
           <span className="text-muted-soft">dev.</span>
-          <span className="text-gradient">{perfil.nome.toLowerCase()}</span>
+          <span className="text-gradient">{`${perfil.nome}${perfil.sobrenome}`.toLowerCase()}</span>
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">
