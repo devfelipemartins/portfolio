@@ -92,15 +92,15 @@ export type Formacao = {
 
 export const formacao: Formacao[] = [
   {
-    curso: "Curso Superior de Desenvolvimento de Sistemas",
+    curso: "Tecnólogo em Desenvolvimento de Sistemas",
     instituicao: "USCS – Universidade Municipal de São Caetano do Sul",
-    periodo: "Concluído", // TODO: confirme o ano de conclusão
+    periodo: "Jan 2024 – Jun 2026",
     status: "Concluído",
   },
   {
     curso: "Técnico em Desenvolvimento de Sistemas",
-    instituicao: "ETEC",
-    periodo: "Concluído", // TODO: confirme o ano de conclusão
+    instituicao: "ETEC de Rio Grande da Serra",
+    periodo: "Jan 2021 – Dez 2023",
     status: "Concluído",
   },
 ];
