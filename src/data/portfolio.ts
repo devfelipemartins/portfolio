@@ -19,7 +19,7 @@ export const perfil = {
     "Desenvolvedor Full Stack com foco em automação de processos com Python e aplicações web com React, Next.js e Node.js — passando também por processamento de dados (ETL) e suporte de TI.",
   // Bio maior (seção "Sobre")
   bio: [
-    "Sou estudante do Curso Superior de Desenvolvimento de Sistemas na Universidade Municipal de São Caetano do Sul (USCS) e tenho formação técnica em Desenvolvimento de Sistemas pela ETEC. Tenho interesse em desenvolvimento front-end e automação, com o objetivo de criar soluções integradas que melhorem processos e promovam resultados reais.",
+    "Sou formado no Tecnólogo em Desenvolvimento de Sistemas pela Universidade Municipal de São Caetano do Sul (USCS) e tenho formação técnica em Desenvolvimento de Sistemas pela ETEC. Tenho interesse em desenvolvimento front-end e automação, com o objetivo de criar soluções integradas que melhorem processos e promovam resultados reais.",
     "Atualmente atuo como Desenvolvedor de Automações de Escritório na Reluz Contábil, onde otimizo processos operacionais com soluções em Python e desenvolvo aplicações e sites com tecnologias como React, Next.js e Node.js.",
     "Também realizo processos de ETL e suporte de TI (helpdesk), garantindo a eficiência e a continuidade das operações do dia a dia. Sigo em constante aprendizado, buscando novas certificações e desafios.",
   ],

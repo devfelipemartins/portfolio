@@ -31,7 +31,11 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target as HTMLElement, { offset: -72 });
+      // Offset padrão compensa o header fixo; um link pode sobrescrever
+      // com data-scroll-offset (positivo = rola mais para baixo na seção).
+      const attr = anchor.getAttribute("data-scroll-offset");
+      const offset = attr !== null ? Number(attr) : -72;
+      lenis.scrollTo(target as HTMLElement, { offset });
     };
     document.addEventListener("click", onClick);
 

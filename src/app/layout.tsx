@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { perfil } from "@/data/portfolio";
 import SmoothScroll from "@/components/motion/SmoothScroll";
-import Cursor from "@/components/motion/Cursor";
 
 // Script anti-flash: define o tema antes da pintura (executado no HTML do SSR).
 const themeInit = `(function(){try{var s=localStorage.getItem('theme');var t=s||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark');document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}})();`;
@@ -57,7 +56,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <Cursor />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

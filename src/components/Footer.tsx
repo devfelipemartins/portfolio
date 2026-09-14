@@ -48,7 +48,7 @@ export default function Footer() {
         className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row"
       >
         <p className="text-sm text-muted-soft">
-          © {ano} {perfil.nome} {perfil.sobrenome}. Feito com Next.js.
+          © {ano} {perfil.nome} {perfil.sobrenome}. Todos os direitos reservados.
         </p>
         <div className="flex items-center gap-5 text-muted-soft">
           {contatos.github && (
