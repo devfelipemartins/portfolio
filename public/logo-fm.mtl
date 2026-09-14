@@ -1,0 +1,13 @@
+# Exported by three-d-stage
+newmtl gradiente-fm
+Kd 1.0000 1.0000 1.0000
+Ks 0.2000 0.2000 0.2000
+Ns 132
+d 1.0000
+
+newmtl branco-frio
+Kd 0.8070 0.8388 1.0000
+Ks 0.2000 0.2000 0.2000
+Ns 156
+d 1.0000
+

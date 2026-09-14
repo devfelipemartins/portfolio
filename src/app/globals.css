@@ -1,0 +1,370 @@
+@import "tailwindcss";
+
+/* ===========================================================
+   Design tokens (tema) — Tailwind v4 @theme
+   Geram utilitários como bg-surface, text-accent-2
+   =========================================================== */
+@theme {
+  --color-background: #0a0b10;
+  --color-background-soft: #10121a;
+  --color-surface: #151824;
+  --color-surface-hover: #1c2030;
+  --color-border: #262a3a;
+  --color-foreground: #e7e9f0;
+  --color-muted: #9aa1b4;
+  --color-muted-soft: #6b7186;
+
+  /* Cores de destaque (gradiente tech) */
+  --color-accent: #6366f1; /* indigo */
+  --color-accent-2: #22d3ee; /* cyan */
+  --color-accent-3: #a855f7; /* purple */
+
+  --color-accent-glow: rgba(99, 102, 241, 0.35);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ===========================================================
+   Tema CLARO — sobrescreve os tokens quando html[data-theme="light"].
+   O padrão (sem data-theme ou data-theme="dark") continua escuro.
+   =========================================================== */
+:root {
+  color-scheme: dark;
+}
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --color-background: #f6f7fb;
+  --color-background-soft: #eceff5;
+  --color-surface: #ffffff;
+  --color-surface-hover: #eef1f8;
+  --color-border: #e0e4ee;
+  --color-foreground: #14161d;
+  --color-muted: #515869;
+  --color-muted-soft: #7a8091;
+
+  --color-accent: #4f46e5; /* indigo mais profundo p/ contraste no claro */
+  --color-accent-2: #0891b2; /* cyan mais profundo */
+  --color-accent-3: #9333ea; /* purple mais profundo */
+
+  --color-accent-glow: rgba(79, 70, 229, 0.28);
+}
+
+/* ===========================================================
+   Utilitários customizados — Tailwind v4 @utility
+   =========================================================== */
+
+/* Texto com gradiente (gradiente único do projeto) */
+@utility text-gradient {
+  background: linear-gradient(120deg, var(--color-accent-2), var(--color-accent), var(--color-accent-3));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cartão de vidro (glassmorphism) */
+@utility glass {
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+}
+
+/* Elevação/brilho ao passar o mouse (cards sem tilt, ex.: Formação) */
+@utility card-hover {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  &:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border));
+    box-shadow: 0 12px 40px -12px var(--color-accent-glow);
+  }
+}
+
+/* ===========================================================
+   Base
+   =========================================================== */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    /* O scroll suave é do Lenis (JS); nativo desligado para não conflitar. */
+    scroll-behavior: auto;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Brilho radial de fundo */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(600px circle at 20% 10%, rgba(99, 102, 241, 0.12), transparent 45%),
+      radial-gradient(700px circle at 85% 20%, rgba(34, 211, 238, 0.08), transparent 45%),
+      radial-gradient(600px circle at 50% 90%, rgba(168, 85, 247, 0.08), transparent 45%);
+    pointer-events: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-soft);
+  }
+}
+
+/* ===========================================================
+   Lenis (scroll suave)
+   =========================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ===========================================================
+   G3 · Cursor customizado
+   =========================================================== */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0; /* revelado via JS só em ponteiro fino */
+  will-change: transform;
+}
+/* Em telas de toque não existe cursor a substituir. */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #e7e9f0;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  /* neutro para funcionar tanto no escuro quanto no claro */
+  border: 1.5px solid rgba(125, 130, 148, 0.6);
+}
+/* Esconde o cursor nativo quando o customizado está ativo (ponteiro fino). */
+html[data-cursor="custom"],
+html[data-cursor="custom"] * {
+  cursor: none !important;
+}
+
+/* ===========================================================
+   G2 · Barra de progresso de scroll
+   =========================================================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.06);
+}
+.scroll-progress > span {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(120deg, #22d3ee, #6366f1, #a855f7);
+}
+
+/* ===========================================================
+   N1 · Navbar vira glass no scroll · N2 · link ativo
+   =========================================================== */
+header.site-header {
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+header.site-header .nav-inner {
+  transition: padding 0.3s ease;
+}
+header.site-header.nav-scrolled {
+  background: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--color-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+header.site-header.nav-scrolled .nav-inner {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.nav-link {
+  position: relative;
+  color: var(--color-muted);
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: var(--color-foreground);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(120deg, #22d3ee, #6366f1, #a855f7);
+  transform: scaleX(0.3);
+  transform-origin: center;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-link.active {
+  color: var(--color-foreground);
+}
+.nav-link.active::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* ===========================================================
+   K3 / P4 / C3 · Card com tilt 3D + glow que segue o mouse
+   =========================================================== */
+.tilt-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(99, 102, 241, 0.16),
+    transparent 70%
+  );
+}
+.tilt-card:hover .card-glow {
+  opacity: 1;
+}
+.tilt-card[data-glow="indigo"]:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 22px 60px -16px rgba(99, 102, 241, 0.35);
+}
+.tilt-card[data-glow="cyan"] .card-glow {
+  background: radial-gradient(
+    320px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(34, 211, 238, 0.14),
+    transparent 70%
+  );
+}
+.tilt-card[data-glow="cyan"]:hover {
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 20px 50px -16px rgba(34, 211, 238, 0.35);
+}
+
+/* ===========================================================
+   K4 · Marquee infinito de tecnologias
+   =========================================================== */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ===========================================================
+   P1 · Barra de progresso interna do card destaque
+   =========================================================== */
+.feature-progress {
+  height: 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+.feature-progress > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(120deg, #22d3ee, #6366f1, #a855f7);
+}
+
+/* ===========================================================
+   G4 · Spotlight seguindo o mouse (Hero)
+   =========================================================== */
+.spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  margin: -300px 0 0 -300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.18), transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+/* ===========================================================
+   Respeita "reduzir movimento": sem animação, conteúdo sempre visível.
+   =========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [class*="animate-"] {
+    animation: none !important;
+  }
+  .cursor-dot,
+  .cursor-ring,
+  .spotlight {
+    display: none !important;
+  }
+  html[data-cursor="custom"],
+  html[data-cursor="custom"] * {
+    cursor: auto !important;
+  }
+  .nav-link::after {
+    transition: none;
+  }
+}
