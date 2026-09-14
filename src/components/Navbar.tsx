@@ -123,6 +123,7 @@ export default function Navbar() {
 
           <a
             href="#contato"
+            data-scroll-offset="100"
             className="hidden rounded-full border border-accent/40 bg-accent/10 px-5 py-2 text-sm font-medium text-foreground transition-all hover:bg-accent/20 md:inline-block"
           >
             Fale comigo
