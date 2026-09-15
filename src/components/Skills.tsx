@@ -1,6 +1,6 @@
 "use client";
 
-import { skills } from "@/data/portfolio";
+import { skills, softSkills } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
 import TiltCard from "./motion/TiltCard";
 import { gsap } from "./motion/gsap";
@@ -49,6 +49,19 @@ export default function Skills() {
         scrollTrigger: { trigger: el, start: "top 85%", once: true },
       });
     });
+
+    // Soft skills · reveal em cascata
+    const softGrid = root.querySelector<HTMLElement>("[data-soft-grid]");
+    const softPills = root.querySelectorAll<HTMLElement>("[data-soft-pill]");
+    if (softGrid && softPills.length) {
+      gsap.from(softPills, {
+        y: 10,
+        opacity: 0,
+        stagger: 0.04,
+        duration: 0.4,
+        scrollTrigger: { trigger: softGrid, start: "top 88%", once: true },
+      });
+    }
 
     // K4 · marquee infinito (desacelera no hover)
     const track = root.querySelector<HTMLElement>("[data-marquee-track]");
@@ -126,6 +139,24 @@ export default function Skills() {
               </ul>
             </TiltCard>
           ))}
+        </div>
+
+        {/* Soft skills */}
+        <div className="mt-10">
+          <h3 className="mb-4 font-mono text-sm font-semibold uppercase tracking-wider text-accent-2">
+            Soft Skills
+          </h3>
+          <ul data-soft-grid className="flex flex-wrap gap-2">
+            {softSkills.map((s) => (
+              <li
+                key={s}
+                data-soft-pill
+                className="rounded-lg border border-border bg-surface/60 px-3 py-1.5 text-sm text-foreground transition-colors hover:border-accent/50"
+              >
+                {s}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* K4 · marquee infinito de tecnologias */}
