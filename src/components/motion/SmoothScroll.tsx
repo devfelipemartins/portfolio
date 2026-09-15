@@ -31,10 +31,21 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      // Offset padrão compensa o header fixo; um link pode sobrescrever
-      // com data-scroll-offset (positivo = rola mais para baixo na seção).
+      // Um link pode sobrescrever o cálculo com data-scroll-offset
+      // (positivo = rola mais para baixo na seção, ex.: #contato).
       const attr = anchor.getAttribute("data-scroll-offset");
-      const offset = attr !== null ? Number(attr) : -72;
+      let offset: number;
+      if (attr !== null) {
+        offset = Number(attr);
+      } else {
+        // Encosta o TÍTULO da seção logo abaixo do header fixo, pulando o
+        // padding-top da seção (senão o título cai ~1 tela para baixo).
+        const bar = document.querySelector<HTMLElement>(".nav-inner");
+        const headerH = bar ? bar.getBoundingClientRect().height : 68;
+        const padTop = parseFloat(getComputedStyle(target as HTMLElement).paddingTop) || 0;
+        const gap = 24; // respiro entre a navbar e o título
+        offset = padTop - headerH - gap;
+      }
       lenis.scrollTo(target as HTMLElement, { offset });
     };
     document.addEventListener("click", onClick);
