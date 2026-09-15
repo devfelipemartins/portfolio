@@ -48,12 +48,42 @@ export const skills: { categoria: string; itens: string[] }[] = [
   },
   {
     categoria: "Back-end & Automação",
-    itens: ["Python", "Node.js", "ETL", "Pandas", "Web Scraping", "APIs REST"],
+    itens: [
+      "Python",
+      "Node.js",
+      "Web Scraping",
+      "Selenium",
+      "PyAutoGUI",
+      "OpenCV",
+      "Agentes de IA",
+      "Automação com IA",
+      "APIs REST",
+      "ETL",
+      "Pandas",
+    ],
   },
   {
     categoria: "Dados, Nuvem & Infra",
-    itens: ["SQL", "AWS (Cloud Foundations)", "Docker", "Git & GitHub", "Suporte de TI (Helpdesk)"],
+    itens: [
+      "SQL",
+      "Tratamento e manipulação de dados",
+      "AWS (Cloud Foundations)",
+      "Docker",
+      "Git & GitHub",
+      "Suporte de TI (Helpdesk)",
+    ],
   },
+];
+
+/* Soft skills (competências comportamentais) */
+export const softSkills: string[] = [
+  "Proatividade",
+  "Organização",
+  "Pontualidade",
+  "Facilidade de aprendizado",
+  "Comunicação",
+  "Trabalho em equipe",
+  "Resolução de problemas",
 ];
 
 /* ---------------------------------------------------------------------
@@ -72,11 +102,38 @@ export const experiencias: Experiencia[] = [
   {
     cargo: "Desenvolvedor de Automações de Escritório",
     empresa: "Reluz Contábil",
-    periodo: "Atual", // TODO: confirme o mês/ano de início (ex: "2024 – Atual")
+    periodo: "Jan 2026 – Atual",
     local: "São Paulo, Brasil",
     descricao:
-      "Otimizo processos operacionais com automações em Python e desenvolvo aplicações e sites com React, Next.js e Node.js. Realizo processos de ETL (extração, transformação e carga de dados) e presto suporte de TI (helpdesk), garantindo a continuidade das operações. Efetivado após o período de experiência.",
-    tecnologias: ["Python", "React", "Next.js", "Node.js", "ETL", "SQL"],
+      "Desenvolvo sistemas de automação para processos internos, com back-end em Python (Flask) e front-end em React, Next.js, TypeScript e Tailwind CSS. Construo rotinas que integram web scraping (Selenium/Playwright), extração de dados de PDFs com OCR (pytesseract, pdfplumber, PyMuPDF, OpenCV), manipulação de planilhas (pandas/openpyxl), envio automatizado de mensagens (Twilio) e tarefas agendadas (APScheduler), além de integrações com IA/LLMs e APIs REST — reduzindo o tempo gasto em tarefas manuais e redundantes. No front-end, crio interfaces modernas, responsivas e com foco em UI/UX. Também administro o ambiente Microsoft 365, Azure e Entra ID (contas, MFA e políticas de acesso), apresento as soluções de automação a clientes e presto suporte técnico interno.",
+    tecnologias: [
+      "Python",
+      "Flask",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Web Scraping",
+      "OCR",
+      "Agentes de IA",
+      "APIs REST",
+      "Microsoft 365",
+    ],
+  },
+  {
+    cargo: "Técnico em Tecnologia da Informação",
+    empresa: "ALLTEC",
+    periodo: "Jun 2024 – Jan 2026",
+    descricao:
+      "Atendimento de chamados de HelpDesk (remoto e presencial), com manutenção, montagem e troca de periféricos e componentes (memória RAM, placa de vídeo, processadores, mouse e teclado) em computadores e notebooks. Instalação e configuração de redes locais, impressoras compartilhadas, sistemas operacionais e pacote Office nas estações de trabalho. Gerenciamento de backups, administração de contas de e-mail e senhas de usuários e formatação de máquinas, reduzindo o risco de perda de dados. Também atuei na elaboração de políticas de segurança e na administração dos servidores da empresa.",
+    tecnologias: ["Suporte de TI", "Redes", "Windows", "Backup", "Servidores"],
+  },
+  {
+    cargo: "Estágio em Tecnologia da Informação",
+    empresa: "Intermídia Publicidade",
+    periodo: "Dez 2023 – Mai 2024",
+    descricao:
+      "Organização e gerenciamento de projetos internos, contribuindo para o cumprimento dos prazos da equipe. Digitalização e arquivamento de documentos, com migração de arquivos físicos para armazenamento em nuvem, facilitando o acesso e a colaboração da equipe.",
+    tecnologias: ["Suporte de TI", "Gestão de Projetos", "Cloud"],
   },
 ];
 
