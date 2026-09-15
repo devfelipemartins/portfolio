@@ -117,7 +117,7 @@ export type Certificacao = {
 export const certificacoes: Certificacao[] = [
   {
     nome: "AWS Academy Graduate – Cloud Foundations",
-    emissor: "AWS Academy (via USCS)",
+    emissor: "AWS Academy",
     link: "",
   },
   {
@@ -126,8 +126,8 @@ export const certificacoes: Certificacao[] = [
     link: "",
   },
   {
-    nome: "Git e GitHub: compartilhando e colaborando em projetos",
-    emissor: "Alura",
+    nome: "IT Essentials",
+    emissor: "Cisco Networking Academy",
     link: "",
   },
 ];
@@ -183,11 +183,11 @@ export const projetos: Projeto[] = [
   {
     titulo: "Portfólio Pessoal",
     descricao:
-      "Este próprio site: portfólio em Next.js 16 + React 19 + Tailwind CSS, com logo 3D interativa (model-viewer) e design dark tech responsivo.",
-    tecnologias: ["Next.js", "TypeScript", "Tailwind CSS", "Three.js / GLB"],
+      "Este próprio site. Portfólio pessoal desenvolvido em Next.js e React, com design dark responsivo, animações no scroll (GSAP + Lenis), logo 3D interativa e deploy contínuo na Vercel.",
+    tecnologias: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP"],
     github: "",
     demo: "",
     video: "",
-    imagem: "",
+    imagem: "/projetos/portfolio-home.png",
   },
 ];

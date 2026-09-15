@@ -5,13 +5,14 @@ import { perfil } from "@/data/portfolio";
 import ThemeToggle from "./ThemeToggle";
 import { gsap, ScrollTrigger, useGSAP } from "./motion/gsap";
 
-const links = [
+const links: { href: string; label: string; scrollOffset?: number }[] = [
   { href: "#sobre", label: "Sobre" },
   { href: "#experiencia", label: "Experiência" },
   { href: "#skills", label: "Skills" },
   { href: "#projetos", label: "Projetos" },
   { href: "#formacao", label: "Formação" },
-  { href: "#contato", label: "Contato" },
+  // Mesmo ponto de parada do botão "Fale comigo" (mostra o card inteiro).
+  { href: "#contato", label: "Contato", scrollOffset: 100 },
 ];
 
 export default function Navbar() {
@@ -111,7 +112,7 @@ export default function Navbar() {
         <ul className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} data-nav={l.href} className="nav-link text-sm">
+              <a href={l.href} data-nav={l.href} data-scroll-offset={l.scrollOffset} className="nav-link text-sm">
                 {l.label}
               </a>
             </li>
@@ -152,6 +153,7 @@ export default function Navbar() {
             <li key={l.href} data-mobile-item>
               <a
                 href={l.href}
+                data-scroll-offset={l.scrollOffset}
                 onClick={() => setOpen(false)}
                 className="block py-3 text-muted transition-colors hover:text-foreground"
               >
