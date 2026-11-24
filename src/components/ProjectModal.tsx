@@ -41,9 +41,10 @@ export default function ProjectModal({
     const html = document.documentElement;
     const prev = html.style.overflow;
     html.style.overflow = "hidden";
+    // Não chama dlg.close() aqui: dispararia onClose (e fecharia o modal logo
+    // após abrir no StrictMode). Ao desmontar, o <dialog> sai do DOM sozinho.
     return () => {
       html.style.overflow = prev;
-      if (dlg.open) dlg.close();
     };
   }, []);
 

@@ -151,12 +151,6 @@ export default function Projects() {
                       <CoverFallback />
                     )}
                   </div>
-                  <span
-                    className="absolute left-4 top-4 rounded-full px-3 py-1 text-[13px] font-semibold text-white"
-                    style={{ background: "rgba(99,102,241,0.92)" }}
-                  >
-                    Destaque
-                  </span>
                   {/* P1 · barra de progresso interna */}
                   <div className="feature-progress absolute bottom-0 left-0 right-0">
                     <span data-feature-progress />
@@ -187,7 +181,6 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
-                  <SeeMore projeto={projeto} />
                   <SeeMore projeto={projeto} />
                   <ProjectLinks projeto={projeto} />
                 </div>
@@ -249,6 +242,7 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
+                  <SeeMore projeto={projeto} />
                   <ProjectLinks projeto={projeto} />
                 </div>
               </TiltCard>
