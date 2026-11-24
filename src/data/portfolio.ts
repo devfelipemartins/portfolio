@@ -245,6 +245,7 @@ export type Projeto = {
   video?: string; // link de vídeo (YouTube, Loom, etc.)
   imagem?: string; // capa; se ausente, usa a primeira foto da galeria
   galeria?: FotoProjeto[]; // fotos exibidas no carrossel ao clicar no card
+  dadosFicticios?: boolean; // exibe o aviso de LGPD no carrossel
   recursos?: string[]; // lista "O que ele faz" exibida no modal
   destaque?: boolean;
 };
@@ -273,6 +274,7 @@ export const projetos: Projeto[] = [
       { src: "/projetos/frotas-empresa.webp", legenda: "Detalhe da empresa: frota, situação e vencimento de cada veículo" },
       { src: "/projetos/frotas-email.webp", legenda: "Envio de e-mail de aviso de vencimento, com os veículos selecionados e prévia" },
     ],
+    dadosFicticios: true,
     destaque: true,
   },
   {
@@ -295,6 +297,7 @@ export const projetos: Projeto[] = [
       { src: "/projetos/apolices-lista.webp", legenda: "Visão geral da lista, com filtros por status, seguradora, empresa e mês" },
       { src: "/projetos/apolices-tabela.webp", legenda: "Tabela de apólices com vigência, placa e status, com exportação e envio por e-mail" },
     ],
+    dadosFicticios: true,
     destaque: true,
   },
   {
@@ -319,6 +322,7 @@ export const projetos: Projeto[] = [
       { src: "/projetos/dominio-horas-empresa.webp", legenda: "Resultado de horas no sistema agrupado por empresa, com pessoas e horas de cada uma" },
       { src: "/projetos/dominio-horas-colaborador.webp", legenda: "Resultado de horas no sistema por colaborador: dias, empresas atendidas e sistemas usados" },
     ],
+    dadosFicticios: true,
     destaque: true,
   },
   {

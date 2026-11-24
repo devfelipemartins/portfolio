@@ -125,6 +125,13 @@ export default function ProjectModal({
               )}
             </div>
 
+            {projeto.dadosFicticios && (
+              <p className="border-b border-border bg-accent/5 px-5 py-2 text-xs text-muted">
+                <span className="font-semibold text-accent-2">Dados fictícios.</span> Os nomes,
+                CNPJs, placas e e-mails exibidos nas imagens foram substituídos por informações
+                inventadas, em respeito à LGPD.
+              </p>
+            )}
             <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-3">
               <p aria-live="polite" className="text-sm font-medium">
                 {foto.legenda}
