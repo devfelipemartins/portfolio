@@ -263,6 +263,7 @@ export const projetos: Projeto[] = [
     galeria: [
       { src: "/projetos/frotas-orgaos.webp", legenda: "Tela inicial da Gestão de Frotas: escolha do órgão regulador" },
       { src: "/projetos/frotas-vigencias.webp", legenda: "Dashboard de vigências da frota (ANTT): empresas a vencer, vencidas e vigentes" },
+      { src: "/projetos/frotas-empresa.webp", legenda: "Detalhe da empresa: frota, situação e vencimento de cada veículo" },
     ],
     destaque: true,
   },
@@ -276,7 +277,9 @@ export const projetos: Projeto[] = [
     video: "",
     galeria: [
       { src: "/projetos/apolices-dashboard.webp", legenda: "Dashboard de apólices: indicadores e vencimentos por mês" },
+      { src: "/projetos/apolices-ranking.webp", legenda: "Dashboard de apólices: ranking por seguradora e alertas de vencimento urgentes" },
       { src: "/projetos/apolices-lista.webp", legenda: "Visão geral da lista, com filtros por status, seguradora, empresa e mês" },
+      { src: "/projetos/apolices-tabela.webp", legenda: "Tabela de apólices com vigência, placa e status, com exportação e envio por e-mail" },
     ],
     destaque: true,
   },
