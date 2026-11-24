@@ -50,19 +50,19 @@ export default function Footer() {
         <p className="text-sm text-muted-soft">
           © {ano} {perfil.nome} {perfil.sobrenome}. Todos os direitos reservados.
         </p>
-        <div className="flex items-center gap-5 text-muted-soft">
+        <div className="flex items-center gap-1 text-muted-soft sm:-mr-3">
           {contatos.github && (
-            <a href={contatos.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="transition-colors hover:text-foreground">
+            <a href={contatos.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center transition-colors hover:text-foreground">
               <GitHubIcon width={20} height={20} />
             </a>
           )}
           {contatos.linkedin && (
-            <a href={contatos.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-colors hover:text-foreground">
+            <a href={contatos.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center transition-colors hover:text-foreground">
               <LinkedInIcon width={20} height={20} />
             </a>
           )}
           {contatos.email && (
-            <a href={`mailto:${contatos.email}`} aria-label="E-mail" className="transition-colors hover:text-foreground">
+            <a href={`mailto:${contatos.email}`} aria-label="E-mail" className="inline-flex h-11 w-11 items-center justify-center transition-colors hover:text-foreground">
               <MailIcon width={20} height={20} />
             </a>
           )}

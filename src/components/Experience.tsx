@@ -68,7 +68,7 @@ export default function Experience() {
               <span
                 data-exp-marker
                 className="absolute left-0 top-8 h-3 w-3 -translate-x-1/2 rounded-full bg-accent-2"
-                style={{ boxShadow: "0 0 0 5px #0a0b10" }}
+                style={{ boxShadow: "0 0 0 5px var(--color-background)" }}
               />
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h3 className="text-lg font-bold">{exp.cargo}</h3>

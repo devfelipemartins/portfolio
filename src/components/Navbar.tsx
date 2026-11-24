@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { perfil } from "@/data/portfolio";
 import ThemeToggle from "./ThemeToggle";
 import { gsap, ScrollTrigger, useGSAP } from "./motion/gsap";
@@ -20,6 +20,30 @@ export default function Navbar() {
   const headerRef = useRef<HTMLElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Esc fecha o menu mobile e devolve o foco ao botão.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
+    };
+    // Clique/toque fora do header fecha o menu.
+    const onPointerDown = (e: PointerEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [open]);
 
   // N1 (glass no scroll), N2 (link ativo), N3 (entrada), G2 (barra de progresso)
   useGSAP(
@@ -54,13 +78,20 @@ export default function Navbar() {
       // N2 · scroll spy (um trigger por seção)
       links.forEach((l) => {
         const section = document.querySelector(l.href);
-        const link = header.querySelector(`[data-nav="${l.href}"]`);
-        if (!section || !link) return;
+        // Links do desktop e do painel mobile compartilham data-nav.
+        const navLinks = header.querySelectorAll(`[data-nav="${l.href}"]`);
+        if (!section || navLinks.length === 0) return;
         ScrollTrigger.create({
           trigger: section,
           start: "top 45%",
           end: "bottom 45%",
-          onToggle: (self) => link.classList.toggle("active", self.isActive),
+          onToggle: (self) => {
+            navLinks.forEach((link) => {
+              link.classList.toggle("active", self.isActive);
+              if (self.isActive) link.setAttribute("aria-current", "location");
+              else link.removeAttribute("aria-current");
+            });
+          },
         });
       });
     },
@@ -103,8 +134,8 @@ export default function Navbar() {
         <span ref={progressRef} />
       </div>
 
-      <nav className="nav-inner mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <a href="#topo" className="font-mono text-lg font-bold tracking-tight">
+      <nav aria-label="Principal" className="nav-inner mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6">
+        <a href="#topo" className="inline-flex min-h-11 items-center font-mono text-base font-bold sm:text-lg md:min-h-0 tracking-tight">
           <span className="text-muted-soft">dev.</span>
           <span className="text-gradient">{`${perfil.nome}${perfil.sobrenome}`.toLowerCase()}</span>
         </a>
@@ -131,9 +162,13 @@ export default function Navbar() {
           </a>
 
           <button
-            aria-label="Abrir menu"
+            ref={buttonRef}
+            type="button"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
             onClick={() => setOpen((v) => !v)}
-            className="flex flex-col gap-1.5 p-2 md:hidden"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 md:hidden"
           >
             <span className={`h-0.5 w-6 bg-foreground transition-all ${open ? "translate-y-2 rotate-45" : ""}`} />
             <span className={`h-0.5 w-6 bg-foreground transition-all ${open ? "opacity-0" : ""}`} />
@@ -144,24 +179,29 @@ export default function Navbar() {
 
       {/* N4 · painel mobile (sempre no DOM; altura controlada pelo GSAP) */}
       <div
+        id="menu-mobile"
         ref={panelRef}
+        inert={!open}
         className="glass overflow-hidden border-t border-border md:hidden"
         style={{ height: 0 }}
       >
-        <ul className="flex flex-col px-6 py-4">
-          {links.map((l) => (
-            <li key={l.href} data-mobile-item>
-              <a
-                href={l.href}
-                data-scroll-offset={l.scrollOffset}
-                onClick={() => setOpen(false)}
-                className="block py-3 text-muted transition-colors hover:text-foreground"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <nav aria-label="Menu móvel">
+          <ul className="flex flex-col px-6 py-4">
+            {links.map((l) => (
+              <li key={l.href} data-mobile-item>
+                <a
+                  href={l.href}
+                  data-nav={l.href}
+                  data-scroll-offset={l.scrollOffset}
+                  onClick={() => setOpen(false)}
+                  className="block py-3 text-muted transition-colors hover:text-foreground aria-[current=location]:font-semibold aria-[current=location]:text-foreground"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </header>
   );

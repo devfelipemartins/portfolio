@@ -36,8 +36,9 @@ export default function Logo3D({ src, alt }: { src: string; alt: string }) {
     };
   }, []);
 
-  // Rotação automática (funciona mesmo com "reduzir movimento", caso em que o
-  // auto-rotate nativo fica desligado), pausando enquanto o usuário arrasta.
+  // Rotação automática: pausa enquanto o usuário arrasta, fora da tela, com a
+  // aba oculta e com "reduzir movimento" (nesse caso a logo fica parada, mas
+  // continua girável à mão via camera-controls).
   useEffect(() => {
     if (!ready) return;
     const el = ref.current as unknown as
@@ -91,11 +92,36 @@ export default function Logo3D({ src, alt }: { src: string; alt: string }) {
       raf = requestAnimationFrame(tick);
     };
 
-    last = performance.now();
-    raf = requestAnimationFrame(tick);
+    // O loop só roda se: usuário não pediu "reduzir movimento", a logo está na
+    // tela e a aba está visível. Caso contrário, o rAF é cancelado.
+    const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let inView = true;
+    const update = () => {
+      const shouldRun = !reduceMq.matches && inView && !document.hidden;
+      if (shouldRun && !raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      } else if (!shouldRun && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      update();
+    });
+    io.observe(el);
+    document.addEventListener("visibilitychange", update);
+    reduceMq.addEventListener("change", update);
+    update();
 
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      io.disconnect();
+      document.removeEventListener("visibilitychange", update);
+      reduceMq.removeEventListener("change", update);
       el.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
     };
@@ -109,8 +135,12 @@ export default function Logo3D({ src, alt }: { src: string; alt: string }) {
       <div className="relative h-72 w-72 overflow-hidden rounded-3xl bg-transparent sm:h-80 sm:w-80">
         {/* Spinner enquanto carrega */}
         {!ready && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="h-10 w-10 animate-spin rounded-full border-2 border-border border-t-accent-2" />
+          <div role="status" className="absolute inset-0 flex items-center justify-center">
+            <span className="sr-only">Carregando logo 3D…</span>
+            <span
+              aria-hidden
+              className="h-10 w-10 animate-spin rounded-full border-2 border-border border-t-accent-2"
+            />
           </div>
         )}
 

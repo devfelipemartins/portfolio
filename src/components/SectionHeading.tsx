@@ -13,15 +13,24 @@ export function SectionHeading({ numero, titulo }: { numero: string; titulo: str
     const title = root.querySelector<HTMLElement>("[data-sh-title]")!;
     const line = root.querySelector<HTMLElement>("[data-sh-line]")!;
 
-    gsap.set([num, title], { opacity: 0 });
-    gsap.set(title, { filter: "blur(14px)", y: 18 });
-    gsap.set(line, { scaleX: 0, transformOrigin: "left" });
-
+    // fromTo + immediateRender:false: se o gatilho não disparar, o título
+    // permanece visível na posição natural.
+    const opts = { immediateRender: false };
     gsap
       .timeline({ scrollTrigger: { trigger: root, start: "top 84%", once: true } })
-      .to(num, { opacity: 1, duration: 0.4 }, 0)
-      .to(title, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.8 }, 0.4)
-      .to(line, { scaleX: 1, ease: "none", duration: 0.6 }, 0.4);
+      .fromTo(num, { opacity: 0 }, { opacity: 1, duration: 0.4, ...opts }, 0)
+      .fromTo(
+        title,
+        { opacity: 0, filter: "blur(14px)", y: 18 },
+        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.8, ...opts },
+        0.4,
+      )
+      .fromTo(
+        line,
+        { scaleX: 0, transformOrigin: "left" },
+        { scaleX: 1, ease: "none", duration: 0.6, ...opts },
+        0.4,
+      );
   });
 
   return (

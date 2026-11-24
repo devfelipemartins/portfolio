@@ -14,7 +14,13 @@ export default function Hero() {
   useGSAP(
     () => {
       const root = scope.current!;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      // matchMedia reage à mudança de "reduzir movimento" (e do ponteiro) com a
+      // página aberta: ao mudar, reverte tudo e roda o callback de novo.
+      const mm = gsap.matchMedia();
+      // (Reduzido: nada anima, tudo visível.) O spotlight tem seu próprio
+      // mm.add abaixo, para trocar de ponteiro não reiniciar a entrada.
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
 
       const h1 = root.querySelector<HTMLElement>("[data-hero-title]")!;
       const cargo = root.querySelector<HTMLElement>("[data-hero-cargo]")!;
@@ -23,7 +29,6 @@ export default function Hero() {
       const logoOuter = root.querySelector<HTMLElement>("[data-hero-logo]");
       const logoInner = root.querySelector<HTMLElement>("[data-hero-logo-inner]");
       const arrow = root.querySelector<HTMLElement>("[data-hero-arrow]")!;
-      const spot = root.querySelector<HTMLElement>("[data-hero-spot]")!;
 
       // H1 · máscara de linha no nome
       const titleSplit = SplitText.create(h1, { type: "lines", mask: "lines" });
@@ -78,28 +83,34 @@ export default function Hero() {
         scrollTrigger: { start: 200, end: 280, scrub: true },
       });
 
-      // G4 · spotlight seguindo o mouse (só ponteiro fino)
-      const mm = gsap.matchMedia();
-      mm.add("(pointer: fine)", () => {
-        const xTo = gsap.quickTo(spot, "x", { duration: 0.6, ease: "power3" });
-        const yTo = gsap.quickTo(spot, "y", { duration: 0.6, ease: "power3" });
+      // Recalcula posições quando as fontes terminam de carregar (se ainda montado).
+      let cancelado = false;
+      document.fonts?.ready.then(() => {
+        if (!cancelado) ScrollTrigger.refresh();
+      });
+
+      return () => {
+        cancelado = true;
+        titleSplit.revert();
+        cargoSplit.revert();
+      };
+      });
+
+      // G4 · spotlight seguindo o mouse (só ponteiro fino e com movimento permitido)
+      mm.add("(prefers-reduced-motion: no-preference) and (pointer: fine)", () => {
+        const spotEl = root.querySelector<HTMLElement>("[data-hero-spot]");
+        if (!spotEl) return;
+        const xTo = gsap.quickTo(spotEl, "x", { duration: 0.6, ease: "power3" });
+        const yTo = gsap.quickTo(spotEl, "y", { duration: 0.6, ease: "power3" });
         const move = (e: MouseEvent) => {
           const r = root.getBoundingClientRect();
           xTo(e.clientX - r.left);
           yTo(e.clientY - r.top);
         };
-        gsap.to(spot, { opacity: 1, duration: 0.8 });
+        gsap.to(spotEl, { opacity: 1, duration: 0.8 });
         root.addEventListener("mousemove", move);
         return () => root.removeEventListener("mousemove", move);
       });
-
-      // Recalcula posições quando as fontes terminam de carregar.
-      document.fonts?.ready.then(() => ScrollTrigger.refresh());
-
-      return () => {
-        titleSplit.revert();
-        cargoSplit.revert();
-      };
     },
     { scope },
   );
@@ -108,7 +119,7 @@ export default function Hero() {
     <section
       ref={scope}
       id="topo"
-      className="relative flex min-h-screen items-center overflow-hidden px-6 pt-24 pb-16"
+      className="relative flex min-h-svh items-center overflow-hidden px-6 pt-28 pb-24"
     >
       {/* G4 · spotlight */}
       <div data-hero-spot className="spotlight" aria-hidden />
@@ -155,29 +166,33 @@ export default function Hero() {
             {contatos.curriculo && (
               <a
                 href={contatos.curriculo}
-                target="_blank"
-                rel="noopener noreferrer"
+                download
+                aria-label="Baixar currículo (PDF)"
+                title="Baixar currículo (PDF)"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-muted transition-colors hover:text-foreground"
               >
-                <DocumentIcon width={18} height={18} /> Currículo
+                <DocumentIcon width={18} height={18} aria-hidden /> Currículo
+                <span className="text-xs font-normal opacity-70" aria-hidden>
+                  PDF
+                </span>
               </a>
             )}
           </div>
 
           {/* Redes */}
-          <div data-hero-fade className="mt-8 flex items-center gap-4">
+          <div data-hero-fade className="-ml-2.5 mt-6 flex items-center gap-1">
             {contatos.github && (
-              <a href={contatos.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted transition-colors hover:text-foreground">
+              <a href={contatos.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center text-muted transition-colors hover:text-foreground">
                 <GitHubIcon width={24} height={24} />
               </a>
             )}
             {contatos.linkedin && (
-              <a href={contatos.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted transition-colors hover:text-foreground">
+              <a href={contatos.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center text-muted transition-colors hover:text-foreground">
                 <LinkedInIcon width={24} height={24} />
               </a>
             )}
             {contatos.email && (
-              <a href={`mailto:${contatos.email}`} aria-label="E-mail" className="text-muted transition-colors hover:text-foreground">
+              <a href={`mailto:${contatos.email}`} aria-label="E-mail" className="inline-flex h-11 w-11 items-center justify-center text-muted transition-colors hover:text-foreground">
                 <MailIcon width={24} height={24} />
               </a>
             )}
@@ -218,7 +233,7 @@ export default function Hero() {
         data-hero-arrow
         href="#sobre"
         aria-label="Rolar para baixo"
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-muted-soft transition-colors hover:text-foreground"
+        className="absolute bottom-6 left-1/2 z-10 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center text-muted-soft transition-colors hover:text-foreground"
       >
         <ArrowDownIcon width={24} height={24} />
       </a>

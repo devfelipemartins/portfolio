@@ -86,11 +86,11 @@ export default function Skills() {
 
   return (
     <section ref={ref} id="skills" className="px-6 py-24">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading numero="03" titulo="Skills & Tecnologias" />
 
         {/* Contadores (derivados do portfolio.ts) */}
-        <div className="mt-8 grid grid-cols-2 gap-6">
+        <div className="mt-8 flex justify-center gap-12 text-center sm:gap-20">
           <div>
             <span
               data-count-to={totalTecnologias}
@@ -103,7 +103,10 @@ export default function Skills() {
           <div>
             <span
               data-count-to={totalAreas}
-              className="block font-mono text-4xl font-bold text-gradient sm:text-5xl"
+              // Compensação óptica: o "4" (haste à direita) ficava sobre o "a" de
+              // "atuação". -8,2px (medido nas métricas da Geist 14px) leva o centro
+              // do número ao centro de "de"; em em: 8,2/36 ≈ .23 e 8,2/48 ≈ .17.
+              className="block -translate-x-[0.23em] font-mono text-4xl font-bold text-gradient sm:-translate-x-[0.17em] sm:text-5xl"
             >
               {totalAreas}
             </span>
@@ -113,7 +116,7 @@ export default function Skills() {
 
         <div
           data-skill-grid
-          className="mt-10 grid gap-6 md:grid-cols-3"
+          className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4"
           style={{ perspective: 1000 }}
         >
           {skills.map((grupo) => (
@@ -142,11 +145,11 @@ export default function Skills() {
         </div>
 
         {/* Soft skills */}
-        <div className="mt-10">
+        <div className="mt-10 text-center">
           <h3 className="mb-4 font-mono text-sm font-semibold uppercase tracking-wider text-accent-2">
             Soft Skills
           </h3>
-          <ul data-soft-grid className="flex flex-wrap gap-2">
+          <ul data-soft-grid className="flex flex-wrap justify-center gap-2">
             {softSkills.map((s) => (
               <li
                 key={s}
@@ -165,6 +168,7 @@ export default function Skills() {
             {[...todasTecnologias, ...todasTecnologias].map((tec, i) => (
               <span
                 key={`${tec}-${i}`}
+                aria-hidden={i >= todasTecnologias.length ? true : undefined}
                 className={`whitespace-nowrap rounded-lg border border-border px-4 py-2 font-mono text-sm ${
                   i % 3 === 2 ? "text-accent-2" : "text-muted-soft"
                 }`}

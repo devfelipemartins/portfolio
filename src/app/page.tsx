@@ -11,8 +11,14 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:border focus:border-border focus:bg-surface focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-foreground"
+      >
+        Pular para o conteúdo
+      </a>
       <Navbar />
-      <main className="flex-1">
+      <main id="conteudo" tabIndex={-1} className="flex-1">
         <Hero />
         <About />
         <Experience />

@@ -103,7 +103,7 @@ export default function Education() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Ver credencial"
-                      className="text-muted transition-colors hover:text-foreground"
+                      className="-mr-3 -mt-3 inline-flex h-11 w-11 shrink-0 items-center justify-center text-muted transition-colors hover:text-foreground"
                     >
                       <ExternalIcon width={18} height={18} />
                     </a>

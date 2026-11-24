@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { contatos, perfil } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
 import TiltCard from "./motion/TiltCard";
@@ -10,12 +10,21 @@ import { GitHubIcon, LinkedInIcon, MailIcon, WhatsAppIcon } from "./icons";
 
 export default function Contact() {
   const [copiado, setCopiado] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+
+  // Limpa o timeout pendente ao desmontar.
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const marcarCopiado = () => {
+    setCopiado(true);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setCopiado(false), 1800);
+  };
 
   const copiarEmail = async () => {
     try {
       await navigator.clipboard.writeText(contatos.email);
-      setCopiado(true);
-      window.setTimeout(() => setCopiado(false), 1800);
+      marcarCopiado();
     } catch {
       // Fallback quando a Clipboard API não está disponível
       const ta = document.createElement("textarea");
@@ -26,8 +35,7 @@ export default function Contact() {
       ta.select();
       try {
         document.execCommand("copy");
-        setCopiado(true);
-        window.setTimeout(() => setCopiado(false), 1800);
+        marcarCopiado();
       } catch {
         /* ignora */
       }
@@ -76,24 +84,38 @@ export default function Contact() {
     const cards = root.querySelectorAll<HTMLElement>("[data-contact-card]");
 
     // C1 · blur-in do título + parágrafo
+    // fromTo + immediateRender:false: se o gatilho não disparar, tudo fica visível.
     const tl = gsap.timeline({
       scrollTrigger: { trigger: h3, start: "top 84%", once: true },
     });
-    gsap.set(h3, { opacity: 0, filter: "blur(16px)", y: 20 });
-    gsap.set(para, { opacity: 0, y: 14 });
-    tl.to(h3, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.9 }, 0);
-    tl.to(para, { opacity: 1, y: 0, duration: 0.7 }, 0.2);
+    tl.fromTo(
+      h3,
+      { opacity: 0, filter: "blur(16px)", y: 20 },
+      { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.9, immediateRender: false },
+      0,
+    );
+    tl.fromTo(
+      para,
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.7, immediateRender: false },
+      0.2,
+    );
 
     // C2 · cards de canal em escala (cascata com elasticidade)
     if (cards.length) {
-      gsap.from(cards, {
-        scale: 0.9,
-        opacity: 0,
-        stagger: 0.09,
-        duration: 0.6,
-        ease: "back.out(1.6)",
-        scrollTrigger: { trigger: grid, start: "top 85%", once: true },
-      });
+      gsap.fromTo(
+        cards,
+        { scale: 0.9, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          stagger: 0.09,
+          duration: 0.6,
+          ease: "back.out(1.6)",
+          immediateRender: false,
+          scrollTrigger: { trigger: grid, start: "top 85%", once: true },
+        },
+      );
     }
   });
 
@@ -109,6 +131,11 @@ export default function Contact() {
             Estou {perfil.disponibilidade.toLowerCase()}. Se você tem um projeto, uma
             vaga ou só quer trocar uma ideia, será um prazer conversar.
           </p>
+
+          {/* Anuncia o resultado da cópia para leitores de tela */}
+          <span role="status" aria-live="polite" className="sr-only">
+            {copiado ? "E-mail copiado para a área de transferência" : ""}
+          </span>
 
           <div data-contact-grid className="mt-10 flex flex-wrap justify-center gap-4">
             {canais.map(({ label, valor, href, Icon, copy }) => {
@@ -142,10 +169,11 @@ export default function Contact() {
                     glow="cyan"
                     z={16}
                     onClick={copiarEmail}
-                    aria-label={`Copiar e-mail: ${valor}`}
                     className={`${cardClass} cursor-pointer`}
                   >
                     {inner}
+                    {/* Nome acessível = texto visível + ação (sem aria-label que o substitua). */}
+                    <span className="sr-only">(clique para copiar)</span>
                   </TiltCard>
                 );
               }

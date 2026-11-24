@@ -4,7 +4,7 @@ import Image from "next/image";
 import { projetos, type Projeto } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
 import TiltCard from "./motion/TiltCard";
-import { gsap, ScrollTrigger } from "./motion/gsap";
+import { gsap } from "./motion/gsap";
 import { useMotion } from "./motion/useReveal";
 import { GitHubIcon, ExternalIcon, PlayIcon } from "./icons";
 
@@ -15,17 +15,22 @@ function CoverFallback() {
   return (
     <div
       className="relative h-full w-full"
-      style={{ background: "linear-gradient(135deg, #151824, #10121a)" }}
+      style={{
+        background: "linear-gradient(135deg, var(--color-surface), var(--color-background-soft))",
+      }}
     >
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(420px circle at 40% 40%, rgba(34,211,238,0.18), transparent 70%)",
+            "radial-gradient(420px circle at 40% 40%, color-mix(in srgb, var(--color-accent-2) 20%, transparent), transparent 70%)",
         }}
       />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-mono text-sm" style={{ color: "rgba(154,161,180,0.35)" }}>
+      <div className="absolute inset-0 flex items-center justify-center" aria-hidden>
+        <span
+          className="font-mono text-sm"
+          style={{ color: "color-mix(in srgb, var(--color-muted) 55%, transparent)" }}
+        >
           {"</>"}
         </span>
       </div>
@@ -35,19 +40,19 @@ function CoverFallback() {
 
 function ProjectLinks({ projeto }: { projeto: Projeto }) {
   return (
-    <div className="mt-5 flex flex-wrap items-center gap-4 text-sm">
+    <div className="mt-3 flex flex-wrap items-center gap-x-4 text-sm">
       {projeto.github && (
-        <a href={projeto.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-foreground">
+        <a href={projeto.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
           <GitHubIcon width={18} height={18} /> Código
         </a>
       )}
       {projeto.demo && (
-        <a href={projeto.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-foreground">
+        <a href={projeto.demo} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
           <ExternalIcon width={18} height={18} /> Ver online
         </a>
       )}
       {projeto.video && (
-        <a href={projeto.video} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-foreground">
+        <a href={projeto.video} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
           <PlayIcon width={18} height={18} /> Vídeo
         </a>
       )}
@@ -76,16 +81,24 @@ export default function Projects() {
       }
     });
 
-    // P3 · batch stagger da grade
+    // P3 · reveal da grade. fromTo + immediateRender:false: se o gatilho não
+    // disparar (página aberta já rolada, refresh), os cards ficam visíveis na
+    // posição natural em vez de presos em opacity 0.
     const cards = root.querySelectorAll<HTMLElement>("[data-project-card]");
-    if (cards.length) {
-      gsap.set(cards, { opacity: 0, y: 48 });
-      ScrollTrigger.batch("[data-project-card]", {
-        start: "top 86%",
-        onEnter: (batch) =>
-          gsap.to(batch, { opacity: 1, y: 0, stagger: 0.12, duration: 0.8, overwrite: true }),
-      });
-    }
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 48 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: (i % 2) * 0.12, // escalona as colunas da mesma linha
+          immediateRender: false,
+          scrollTrigger: { trigger: card, start: "top 86%", once: true },
+        },
+      );
+    });
   });
 
   return (
@@ -162,16 +175,26 @@ export default function Projects() {
         {/* Demais projetos (grade) */}
         {demais.length > 0 && (
           <div className="mt-10 grid gap-6 md:grid-cols-2" style={{ perspective: 1000 }}>
-            {demais.map((projeto) => (
+            {demais.map((projeto, idx) => {
+              // Se a contagem é ímpar, o último card ocupa a linha inteira
+              // (layout horizontal) para não sobrar um buraco na grade.
+              const largo = demais.length % 2 === 1 && idx === demais.length - 1;
+              return (
               <TiltCard
                 key={projeto.titulo}
                 as="article"
                 data-project-card
                 glow="cyan"
                 z={20}
-                className="group glass flex flex-col rounded-2xl"
+                className={`group glass flex flex-col rounded-2xl ${
+                  largo ? "md:col-span-2 md:flex-row" : ""
+                }`}
               >
-                <div className="relative aspect-video w-full overflow-hidden">
+                <div
+                  className={`relative aspect-video w-full overflow-hidden ${
+                    largo ? "md:aspect-auto md:min-h-64 md:w-1/2" : ""
+                  }`}
+                >
                   <div className="cover-zoom relative h-full w-full transition-transform duration-500 group-hover:scale-[1.06]">
                     {projeto.imagem ? (
                       <Image
@@ -187,7 +210,7 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col p-6">
+                <div className={`flex flex-1 flex-col p-6 ${largo ? "md:w-1/2 md:p-8" : ""}`}>
                   <h3 className="text-xl font-bold">{projeto.titulo}</h3>
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
                     {projeto.descricao}
@@ -205,7 +228,8 @@ export default function Projects() {
                   <ProjectLinks projeto={projeto} />
                 </div>
               </TiltCard>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
