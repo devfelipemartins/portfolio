@@ -17,7 +17,7 @@ export const perfil = {
   // Bio maior (seção "Sobre")
   bio: [
     "Sou Tecnólogo em Análise e Desenvolvimento de Sistemas pela USCS e técnico em Desenvolvimento de Sistemas pela Etec de Rio Grande da Serra. Busco oportunidades em desenvolvimento front-end, back-end ou automação.",
-    "Na Reluz Contábil fui promovido de Assistente de Automação a Analista de Sistemas Júnior. Desenvolvo sistemas que otimizam processos internos e de clientes, atuo como Product Owner dos sistemas internos e cuido da infraestrutura de deploy.",
+    "Na Reluz Contábil fui promovido de Auxiliar de Automação a Assistente de Automação. Desenvolvo sistemas que otimizam processos internos e de clientes, atuo como Product Owner dos sistemas internos e cuido da infraestrutura de deploy.",
     "Também coordeno o time de automação: distribuo demandas, acompanho entregas e reviso o trabalho. Sigo em constante aprendizado, em busca de novas certificações e desafios.",
   ],
   local: "Ribeirão Pires, São Paulo, Brasil",
@@ -109,7 +109,7 @@ export type Experiencia = {
 
 export const experiencias: Experiencia[] = [
   {
-    cargo: "Analista de Sistemas Júnior",
+    cargo: "Assistente de Automação",
     empresa: "Reluz Contábil",
     periodo: "Out 2026 – Atual",
     local: "São Paulo, Brasil",
@@ -128,7 +128,7 @@ export const experiencias: Experiencia[] = [
     ],
   },
   {
-    cargo: "Assistente de Automação",
+    cargo: "Auxiliar de Automação",
     empresa: "Reluz Contábil",
     periodo: "Jan 2026 – Out 2026",
     local: "São Paulo, Brasil",
