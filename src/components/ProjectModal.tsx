@@ -179,7 +179,18 @@ export default function ProjectModal({
                     aria-hidden="true"
                     className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-2"
                   />
-                  <span>{r}</span>
+                  <span>
+                    {r.indexOf(": ") > 0 && r.indexOf(": ") < 32 ? (
+                      <>
+                        <strong className="font-semibold text-foreground">
+                          {r.slice(0, r.indexOf(": "))}:
+                        </strong>
+                        {r.slice(r.indexOf(": ") + 1)}
+                      </>
+                    ) : (
+                      r
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>

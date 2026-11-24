@@ -256,15 +256,17 @@ export const projetos: Projeto[] = [
   {
     titulo: "Gestão de Frotas",
     descricao:
-      "Sistema em Next.js e Python/Flask, com banco PostgreSQL, que concentra a situação dos veículos e motoristas das empresas de transporte clientes junto aos órgãos reguladores (ARTESP, ANTT, EMTU, SPTrans, Cadastur e Senatran). Login corporativo via Microsoft/Office 365.",
+      "Um só lugar para acompanhar a situação regulatória da frota dos clientes. Robôs entram sozinhos nos portais da ANTT, ARTESP, EMTU, SPTrans, Cadastur e Senatran, trazem veículos, documentos e pendências, e o sistema destaca o que está vencido ou perto de vencer.",
     recursos: [
-      "Busca de veículos: cada empresa é cadastrada com o seu login nos portais dos órgãos, e robôs entram nesses portais (ANTT, ARTESP, EMTU, SPTrans, Cadastur e Senatran) para trazer a frota, os documentos e as pendências de cada uma. Parte das buscas roda sozinha, em horários agendados.",
-      "IPVA: a lista de veículos vem do Senatran e o sistema confere na SEFAZ-SP, marcando cada veículo como Isento, Não isento ou Em análise fiscal.",
-      "Dashboard de vigências: empresas a vencer em 30 dias, vencidas e vigentes, com busca por empresa ou CNPJ.",
-      "Cadastro de motoristas, guarda de certificados digitais e envio de e-mails de aviso de vencimento.",
-      "Consulta da frota por CNPJ ou razão social, com exportação dos resultados em Excel e PDF.",
+      "Busca automática: cada empresa é cadastrada com o seu login nos portais dos órgãos, e os robôs trazem a frota, os documentos e as pendências de cada uma. Parte das buscas roda sozinha, em horários agendados.",
+      "IPVA: a lista de veículos vem do Senatran e é conferida na SEFAZ-SP; cada veículo é marcado como Isento, Não isento ou Em análise fiscal.",
+      "Vigências: dashboard com empresas a vencer em 30 dias, vencidas e vigentes, e busca por empresa ou CNPJ.",
+      "Comunicação: envio de e-mails de aviso de vencimento, com seleção dos veículos e prévia antes de enviar.",
+      "Cadastros: motoristas e certificados digitais guardados no sistema.",
+      "Relatórios: exportação dos resultados em Excel e PDF.",
+      "Acesso: login corporativo via Microsoft/Office 365.",
     ],
-    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "PostgreSQL", "Web Scraping", "Tailwind CSS"],
+    tecnologias: ["Next.js","Python","PostgreSQL","Web Scraping","Agendamento de tarefas","Excel/PDF"],
     github: "", // repositório privado
     demo: "", // sistema de uso interno
     video: "",
@@ -280,14 +282,15 @@ export const projetos: Projeto[] = [
   {
     titulo: "Gestão de Apólices",
     descricao:
-      "Sistema em Next.js e Python/Flask que lê automaticamente os PDFs das apólices de seguro guardados numa pasta da rede e organiza tudo em um painel de indicadores, com alertas de vencimento, exportação para Excel e geração de PDF.",
+      "Transforma uma pasta cheia de PDFs de seguro em um painel de decisão. Um robô lê cada apólice, mesmo com o layout diferente de cada seguradora, e o painel mostra em verde, amarelo e vermelho o que está vigente, a vencer e vencido.",
     recursos: [
-      "Um robô extrai do PDF o segurado, a seguradora, o corretor, o veículo e o período de vigência, mesmo quando cada seguradora monta o PDF de um jeito diferente.",
-      "O painel separa as apólices por cor: vigente (verde), vence em até 30 dias (amarelo) e vencida (vermelho), com filtros por seguradora, empresa, mês e situação.",
-      "Dashboard com total processado, vencimentos por mês, ranking por seguradora e alertas das apólices que vencem em 7 dias.",
-      "Exportação para Excel, geração de PDF e envio por e-mail, individual ou em massa por empresa.",
+      "Leitura automática: o robô extrai segurado, seguradora, corretor, veículo e período de vigência dos PDFs guardados numa pasta da rede, mesmo quando cada seguradora monta o PDF de um jeito.",
+      "Semáforo de vigência: verde para vigente, amarelo para vence em até 30 dias e vermelho para vencida.",
+      "Dashboard: total processado, vencimentos por mês, ranking por seguradora e alertas das apólices que vencem em 7 dias.",
+      "Filtros: por seguradora, empresa, mês e situação, com um clique nos cards e gráficos.",
+      "Saídas: exportação para Excel, geração de PDF e envio por e-mail, individual ou em massa por empresa.",
     ],
-    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "Extração de PDF", "Tailwind CSS"],
+    tecnologias: ["Next.js","Python","Extração de PDF","Automação","Excel/PDF"],
     github: "",
     demo: "",
     video: "",
@@ -303,16 +306,16 @@ export const projetos: Projeto[] = [
   {
     titulo: "Consulta Domínio",
     descricao:
-      "Painel em Next.js (tela) e Python/Flask (servidor) que lê os dados do sistema contábil Domínio apenas para consulta, sem alterar nada, e os transforma em indicadores do escritório. Usa uma lista fixa de consultas prontas (nunca SQL livre) e exige login e permissão do setor Contábil.",
+      "Os números do escritório contábil sem precisar abrir a Domínio. O painel lê o banco do sistema apenas para consulta, sem alterar nada, e mostra horas trabalhadas, notas fiscais, lançamentos e faturamento, conferidos com os relatórios oficiais.",
     recursos: [
-      "Horas trabalhadas de cada colaborador, por sistema (Contabilidade, Fiscal, Folha), por empresa e mês a mês. Os números conferem com o relatório oficial da Domínio, ao segundo.",
-      "Notas fiscais e lançamentos contábeis do período, por empresa.",
-      "Colaboradores ativos, no total e mês a mês.",
-      "Faturamento mensal das empresas (notas de saída), sem as notas canceladas, conferindo ao centavo com a declaração oficial.",
-      "Resultados agrupados por colaborador ou por empresa, com busca, ordenação e exportação para Excel e PDF.",
-      "Segurança: leitura que não trava a Domínio e limite de 50 mil linhas por resposta.",
+      "Horas trabalhadas: de cada colaborador, por sistema (Contabilidade, Fiscal, Folha), por empresa e mês a mês. Confere com o relatório oficial da Domínio, ao segundo.",
+      "Notas fiscais e lançamentos: do período, por empresa.",
+      "Colaboradores ativos: no total e mês a mês.",
+      "Faturamento: mensal das empresas, sem as notas canceladas, conferindo ao centavo com a declaração oficial.",
+      "Visões e relatórios: agrupa por colaborador ou por empresa, com busca, ordenação e exportação para Excel e PDF.",
+      "Segurança: somente leitura, sem travar a Domínio, com consultas pré-definidas (nunca SQL livre), limite de 50 mil linhas por resposta e acesso restrito ao setor Contábil por login.",
     ],
-    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "Docker", "SQL Anywhere", "Firebase Auth"],
+    tecnologias: ["Next.js","Python","SQL Anywhere","Docker","Firebase Auth","Somente leitura"],
     github: "",
     demo: "",
     video: "",
