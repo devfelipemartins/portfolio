@@ -8,16 +8,16 @@
 export const perfil = {
   nome: "Felipe",
   sobrenome: "Martins",
-  cargo: "Analista de Sistemas Júnior",
+  cargo: "Desenvolvedor Fullstack",
   // Frase curta que aparece grande no topo
   headline: "Conecto interfaces web a automações inteligentes em Python.",
   // Parágrafo de apresentação (aparece no topo, abaixo do headline)
   resumo:
-    "Analista de Sistemas Júnior com foco em automação de processos e desenvolvimento full-stack: back-end em Python e front-end em React, Next.js e TypeScript.",
+    "Desenvolvedor Fullstack com foco em automação de processos: back-end em Python e front-end em React, Next.js e TypeScript.",
   // Bio maior (seção "Sobre")
   bio: [
     "Sou Tecnólogo em Análise e Desenvolvimento de Sistemas pela USCS e técnico em Desenvolvimento de Sistemas pela Etec de Rio Grande da Serra. Busco oportunidades em desenvolvimento front-end, back-end ou automação.",
-    "Na Reluz Contábil fui promovido de Auxiliar de Automação a Analista de Sistemas Júnior. Desenvolvo sistemas que otimizam processos internos e de clientes, atuo como Product Owner dos sistemas internos e cuido da infraestrutura de deploy.",
+    "Na Reluz Contábil fui promovido de Assistente de Automação a Analista de Sistemas Júnior. Desenvolvo sistemas que otimizam processos internos e de clientes, atuo como Product Owner dos sistemas internos e cuido da infraestrutura de deploy.",
     "Também coordeno o time de automação: distribuo demandas, acompanho entregas e reviso o trabalho. Sigo em constante aprendizado, em busca de novas certificações e desafios.",
   ],
   local: "Ribeirão Pires, São Paulo, Brasil",
@@ -128,7 +128,7 @@ export const experiencias: Experiencia[] = [
     ],
   },
   {
-    cargo: "Auxiliar de Automação",
+    cargo: "Assistente de Automação",
     empresa: "Reluz Contábil",
     periodo: "Jan 2026 – Out 2026",
     local: "São Paulo, Brasil",
