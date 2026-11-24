@@ -3,25 +3,22 @@
    ---------------------------------------------------------------------
    Edite APENAS este arquivo para atualizar seus dados.
    Não precisa mexer em mais nada do código.
-
-   Dados preenchidos a partir do seu LinkedIn. Campos marcados com TODO
-   ainda precisam da sua confirmação.
    ===================================================================== */
 
 export const perfil = {
   nome: "Felipe",
   sobrenome: "Martins",
-  cargo: "Desenvolvedor Full Stack",
+  cargo: "Analista de Sistemas Júnior",
   // Frase curta que aparece grande no topo
   headline: "Conecto interfaces web a automações inteligentes em Python.",
   // Parágrafo de apresentação (aparece no topo, abaixo do headline)
   resumo:
-    "Desenvolvedor Full Stack com foco em automação de processos com Python e aplicações web com React, Next.js e Node.js — passando também por processamento de dados (ETL) e suporte de TI.",
+    "Analista de Sistemas Júnior com foco em automação de processos e desenvolvimento full-stack: back-end em Python e front-end em React, Next.js e TypeScript.",
   // Bio maior (seção "Sobre")
   bio: [
-    "Sou formado no Tecnólogo em Desenvolvimento de Sistemas pela Universidade Municipal de São Caetano do Sul (USCS) e tenho formação técnica em Desenvolvimento de Sistemas pela ETEC. Tenho interesse em desenvolvimento front-end e automação, com o objetivo de criar soluções integradas que melhorem processos e promovam resultados reais.",
-    "Atualmente atuo como Desenvolvedor de Automações de Escritório na Reluz Contábil, onde otimizo processos operacionais com soluções em Python e desenvolvo aplicações e sites com tecnologias como React, Next.js e Node.js.",
-    "Também realizo processos de ETL e suporte de TI (helpdesk), garantindo a eficiência e a continuidade das operações do dia a dia. Sigo em constante aprendizado, buscando novas certificações e desafios.",
+    "Sou Tecnólogo em Análise e Desenvolvimento de Sistemas pela USCS e técnico em Desenvolvimento de Sistemas pela Etec de Rio Grande da Serra. Busco oportunidades em desenvolvimento front-end, back-end ou automação.",
+    "Na Reluz Contábil fui promovido de Auxiliar de Automação a Analista de Sistemas Júnior. Desenvolvo sistemas que otimizam processos internos e de clientes, atuo como Product Owner dos sistemas internos e cuido da infraestrutura de deploy.",
+    "Também coordeno o time de automação: distribuo demandas, acompanho entregas e reviso o trabalho. Sigo em constante aprendizado, em busca de novas certificações e desafios.",
   ],
   local: "Ribeirão Pires, São Paulo, Brasil",
   disponibilidade: "Aberto a novas oportunidades",
@@ -37,46 +34,55 @@ export const contatos = {
   github: "https://github.com/devfelipemartins",
   linkedin: "https://www.linkedin.com/in/felipe-martins-686887266/",
   whatsapp: "", // ex: "https://wa.me/5511999999999" — deixe "" para ocultar
-  curriculo: "", // ex: "/curriculo.pdf" (coloque o PDF em /public) — deixe "" para ocultar
+  curriculo: "/curriculo-felipe-martins.pdf", // PDF em /public (versão SEM telefone) — deixe "" para ocultar
 };
 
 /* Skills agrupadas por categoria */
 export const skills: { categoria: string; itens: string[] }[] = [
   {
     categoria: "Front-end",
-    itens: ["React.js", "Next.js", "JavaScript", "TypeScript", "HTML", "CSS", "Tailwind CSS"],
+    itens: ["React", "Next.js", "JavaScript", "TypeScript", "HTML", "CSS", "Tailwind CSS"],
   },
   {
     categoria: "Back-end & Automação",
     itens: [
       "Python",
+      "Flask",
       "Node.js",
       "Web Scraping",
       "Selenium",
-      "PyAutoGUI",
+      "Playwright",
+      "OCR",
       "OpenCV",
-      "Agentes de IA",
-      "Automação com IA",
-      "APIs REST",
-      "ETL",
       "Pandas",
+      "APIs REST",
+      "Integração com IA e agentes",
     ],
   },
   {
-    categoria: "Dados, Nuvem & Infra",
+    categoria: "Banco de Dados",
+    itens: ["MySQL", "PostgreSQL", "SQLite"],
+  },
+  {
+    categoria: "Infra & Ferramentas",
     itens: [
-      "SQL",
-      "Tratamento e manipulação de dados",
-      "AWS (Cloud Foundations)",
       "Docker",
+      "Docker Compose",
+      "Nginx",
       "Git & GitHub",
-      "Suporte de TI (Helpdesk)",
+      "Jira",
+      "Microsoft 365",
+      "Azure",
+      "Entra ID",
+      "AWS (Cloud Foundations)",
     ],
   },
 ];
 
 /* Soft skills (competências comportamentais) */
 export const softSkills: string[] = [
+  "Liderança",
+  "Delegação e acompanhamento de demandas",
   "Proatividade",
   "Organização",
   "Pontualidade",
@@ -100,12 +106,31 @@ export type Experiencia = {
 
 export const experiencias: Experiencia[] = [
   {
-    cargo: "Desenvolvedor de Automações de Escritório",
+    cargo: "Analista de Sistemas Júnior",
     empresa: "Reluz Contábil",
-    periodo: "Jan 2026 – Atual",
+    periodo: "Out 2026 – Atual",
     local: "São Paulo, Brasil",
     descricao:
-      "Desenvolvo sistemas de automação para processos internos, com back-end em Python (Flask) e front-end em React, Next.js, TypeScript e Tailwind CSS. Construo rotinas que integram web scraping (Selenium/Playwright), extração de dados de PDFs com OCR (pytesseract, pdfplumber, PyMuPDF, OpenCV), manipulação de planilhas (pandas/openpyxl), envio automatizado de mensagens (Twilio) e tarefas agendadas (APScheduler), além de integrações com IA/LLMs e APIs REST — reduzindo o tempo gasto em tarefas manuais e redundantes. No front-end, crio interfaces modernas, responsivas e com foco em UI/UX. Também administro o ambiente Microsoft 365, Azure e Entra ID (contas, MFA e políticas de acesso), apresento as soluções de automação a clientes e presto suporte técnico interno.",
+      "Coordeno o time de automação (demandas e prazos pelo Jira, revisão de código) e atuo como Product Owner dos sistemas internos. Levanto requisitos com áreas internas e clientes e conduzo projetos da arquitetura à entrega. Integro APIs como SERPRO (Integra Contador) e InfoSimples. Mantenho o ambiente de produção: Docker Compose, Nginx, Git com submódulos e testes de recuperação de desastres. Administro Microsoft 365, Azure e Entra ID. Apresento as soluções de automação a clientes.",
+    tecnologias: [
+      "Python",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Docker Compose",
+      "Nginx",
+      "Jira",
+      "APIs SERPRO",
+      "Microsoft 365",
+    ],
+  },
+  {
+    cargo: "Auxiliar de Automação",
+    empresa: "Reluz Contábil",
+    periodo: "Jan 2026 – Out 2026",
+    local: "São Paulo, Brasil",
+    descricao:
+      "Desenvolvi sistemas de automação para processos internos, com back-end em Python (Flask) e front-end em React/Next.js, TypeScript e Tailwind CSS. Criei rotinas com web scraping (Selenium/Playwright), OCR em PDFs (pytesseract, pdfplumber, PyMuPDF, OpenCV), planilhas (pandas/openpyxl), mensagens automáticas (Twilio), tarefas agendadas (APScheduler) e IA (LLMs, agentes, engenharia de prompt), reduzindo tarefas manuais. Também atendi chamados dos colaboradores (Windows, Office e hardware).",
     tecnologias: [
       "Python",
       "Flask",
@@ -114,9 +139,8 @@ export const experiencias: Experiencia[] = [
       "TypeScript",
       "Web Scraping",
       "OCR",
-      "Agentes de IA",
+      "IA e agentes",
       "APIs REST",
-      "Microsoft 365",
     ],
   },
   {
@@ -124,7 +148,7 @@ export const experiencias: Experiencia[] = [
     empresa: "ALLTEC",
     periodo: "Jun 2024 – Jan 2026",
     descricao:
-      "Atendimento de chamados de HelpDesk (remoto e presencial), com manutenção, montagem e troca de periféricos e componentes (memória RAM, placa de vídeo, processadores, mouse e teclado) em computadores e notebooks. Instalação e configuração de redes locais, impressoras compartilhadas, sistemas operacionais e pacote Office nas estações de trabalho. Gerenciamento de backups, administração de contas de e-mail e senhas de usuários e formatação de máquinas, reduzindo o risco de perda de dados. Também atuei na elaboração de políticas de segurança e na administração dos servidores da empresa.",
+      "Elaborei políticas de segurança e administrei os servidores da empresa. Resolvi chamados de helpdesk (remoto e presencial), com manutenção, montagem e troca de componentes e periféricos. Instalei e configurei redes locais, impressoras compartilhadas, sistemas operacionais e pacote Office. Gerenciei backups, contas de e-mail e senhas, reduzindo o risco de perda de dados.",
     tecnologias: ["Suporte de TI", "Redes", "Windows", "Backup", "Servidores"],
   },
   {
@@ -132,7 +156,7 @@ export const experiencias: Experiencia[] = [
     empresa: "Intermídia Publicidade",
     periodo: "Dez 2023 – Mai 2024",
     descricao:
-      "Organização e gerenciamento de projetos internos, contribuindo para o cumprimento dos prazos da equipe. Digitalização e arquivamento de documentos, com migração de arquivos físicos para armazenamento em nuvem, facilitando o acesso e a colaboração da equipe.",
+      "Organizei e gerenciei projetos internos, contribuindo para o cumprimento dos prazos da equipe. Digitalizei e arquivei documentos, migrando arquivos físicos para armazenamento em nuvem e facilitando o acesso da equipe.",
     tecnologias: ["Suporte de TI", "Gestão de Projetos", "Cloud"],
   },
 ];
@@ -149,15 +173,15 @@ export type Formacao = {
 
 export const formacao: Formacao[] = [
   {
-    curso: "Tecnólogo em Desenvolvimento de Sistemas",
+    curso: "Tecnólogo em Análise e Desenvolvimento de Sistemas",
     instituicao: "USCS – Universidade Municipal de São Caetano do Sul",
-    periodo: "Jan 2024 – Jun 2026",
+    periodo: "Fev 2024 – Jul 2026",
     status: "Concluído",
   },
   {
-    curso: "Técnico em Desenvolvimento de Sistemas",
+    curso: "Ensino Médio e Técnico em Desenvolvimento de Sistemas",
     instituicao: "ETEC de Rio Grande da Serra",
-    periodo: "Jan 2021 – Dez 2023",
+    periodo: "2021 – 2023",
     status: "Concluído",
   },
 ];
@@ -173,25 +197,29 @@ export type Certificacao = {
 
 export const certificacoes: Certificacao[] = [
   {
-    nome: "AWS Academy Graduate – Cloud Foundations",
-    emissor: "AWS Academy",
+    nome: "AWS Academy Cloud Foundations",
+    emissor: "Amazon Web Services (30h)",
+    link: "",
+  },
+  {
+    nome: "Conceitos Básicos de Rede",
+    emissor: "Cisco (22h)",
     link: "",
   },
   {
     nome: "Introduction to Cybersecurity",
-    emissor: "Cisco Networking Academy",
+    emissor: "Cisco (6h)",
     link: "",
   },
   {
-    nome: "IT Essentials",
-    emissor: "Cisco Networking Academy",
+    nome: "Git e GitHub: compartilhando e colaborando em projeto",
+    emissor: "Alura (8h)",
     link: "",
   },
 ];
 
 /* ---------------------------------------------------------------------
    PROJETOS
-   (Ainda com exemplos — me passe seus projetos reais / GitHub para eu preencher)
    --------------------------------------------------------------------- */
 export type Projeto = {
   titulo: string;
@@ -200,7 +228,7 @@ export type Projeto = {
   github?: string;
   demo?: string; // link do site no ar
   video?: string; // link de vídeo (YouTube, Loom, etc.)
-  imagem?: string; // caminho do print, ex: "/projetos/projeto1.png" (arquivo em /public/projetos)
+  imagem?: string; // caminho do print (arquivo em /public/projetos)
   destaque?: boolean;
 };
 
@@ -210,8 +238,8 @@ export const projetos: Projeto[] = [
     descricao:
       "Sistema web para consulta e gestão de frotas de veículos junto aos órgãos reguladores (ARTESP, ANTT, EMTU, SPTrans e Cadastur). Permite cadastrar empresas, consultar a frota por CNPJ ou razão social e exportar os dados. Login corporativo via Microsoft/Office 365.",
     tecnologias: ["Next.js", "React", "TypeScript", "Python", "Tailwind CSS"],
-    github: "", // repositórios privados — deixei sem link (visitantes não teriam acesso)
-    demo: "", // roda em rede interna (192.168.x) — não exponha o IP publicamente
+    github: "", // repositório privado
+    demo: "", // sistema de uso interno
     video: "",
     imagem: "/projetos/transporte-home.jpeg",
     destaque: true,
@@ -228,22 +256,12 @@ export const projetos: Projeto[] = [
     destaque: true,
   },
   {
-    titulo: "Automação de Processos Contábeis",
-    descricao:
-      "TODO: descreva uma automação real que você fez na Reluz. Ex: robô em Python que extrai dados de sistemas, processa (ETL) e alimenta relatórios automaticamente, economizando horas de trabalho manual.",
-    tecnologias: ["Python", "ETL", "Pandas", "SQL"],
-    github: "",
-    demo: "",
-    video: "",
-    imagem: "",
-  },
-  {
     titulo: "Portfólio Pessoal",
     descricao:
-      "Este próprio site. Portfólio pessoal desenvolvido em Next.js e React, com design dark responsivo, animações no scroll (GSAP + Lenis), logo 3D interativa e deploy contínuo na Vercel.",
+      "Este próprio site. Portfólio pessoal desenvolvido em Next.js e React, com design responsivo e tema claro/escuro, animações no scroll (GSAP + Lenis), logo 3D interativa e deploy contínuo na Vercel.",
     tecnologias: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP"],
-    github: "",
-    demo: "",
+    github: "https://github.com/devfelipemartins/portfolio",
+    demo: "https://devfelipemartins.com.br",
     video: "",
     imagem: "/projetos/portfolio-home.png",
   },
