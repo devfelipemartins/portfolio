@@ -253,25 +253,39 @@ export type FotoProjeto = { src: string; legenda: string };
 
 export const projetos: Projeto[] = [
   {
-    titulo: "RELUZ Hub — Gestão de Transporte",
+    titulo: "RELUZ Hub — Gestão de Frotas",
     descricao:
-      "Sistema web para consulta e gestão de frotas de veículos junto aos órgãos reguladores (ARTESP, ANTT, EMTU, SPTrans e Cadastur). Permite cadastrar empresas, consultar a frota por CNPJ ou razão social e exportar os dados. Login corporativo via Microsoft/Office 365.",
-    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Tailwind CSS"],
+      "Sistema em Next.js e Python/Flask, com banco PostgreSQL, que concentra a situação dos veículos e motoristas das empresas de transporte clientes junto aos órgãos reguladores (ARTESP, ANTT, EMTU, SPTrans, Cadastur e Senatran). Login corporativo via Microsoft/Office 365.",
+    recursos: [
+      "Busca de veículos: cada empresa é cadastrada com o seu login nos portais dos órgãos, e robôs entram nesses portais (ANTT, ARTESP, EMTU, SPTrans, Cadastur e Senatran) para trazer a frota, os documentos e as pendências de cada uma. Parte das buscas roda sozinha, em horários agendados.",
+      "IPVA: a lista de veículos vem do Senatran e o sistema confere na SEFAZ-SP, marcando cada veículo como Isento, Não isento ou Em análise fiscal.",
+      "Dashboard de vigências: empresas a vencer em 30 dias, vencidas e vigentes, com busca por empresa ou CNPJ.",
+      "Cadastro de motoristas, guarda de certificados digitais e envio de e-mails de aviso de vencimento.",
+      "Consulta da frota por CNPJ ou razão social, com exportação dos resultados em Excel e PDF.",
+    ],
+    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "PostgreSQL", "Web Scraping", "Tailwind CSS"],
     github: "", // repositório privado
     demo: "", // sistema de uso interno
     video: "",
     galeria: [
-      { src: "/projetos/frotas-orgaos.webp", legenda: "Tela inicial da Gestão de Frotas: escolha do órgão regulador" },
+      { src: "/projetos/frotas-orgaos.webp", legenda: "Tela inicial da Gestão de Frotas: escolha do órgão regulador ou do IPVA" },
       { src: "/projetos/frotas-vigencias.webp", legenda: "Dashboard de vigências da frota (ANTT): empresas a vencer, vencidas e vigentes" },
       { src: "/projetos/frotas-empresa.webp", legenda: "Detalhe da empresa: frota, situação e vencimento de cada veículo" },
+      { src: "/projetos/frotas-email.webp", legenda: "Envio de e-mail de aviso de vencimento, com os veículos selecionados e prévia" },
     ],
     destaque: true,
   },
   {
     titulo: "RELUZ Hub — Gestão de Apólices",
     descricao:
-      "Painel para gestão de apólices de seguro com dashboard de indicadores: total processado, vencimentos por mês, status (vigente, a vencer, vencida), ranking por seguradora e alertas de vencimento. Inclui exportação para Excel e geração de PDF.",
-    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Tailwind CSS"],
+      "Sistema em Next.js e Python/Flask que lê automaticamente os PDFs das apólices de seguro guardados numa pasta da rede e organiza tudo em um painel de indicadores, com alertas de vencimento, exportação para Excel e geração de PDF.",
+    recursos: [
+      "Um robô extrai do PDF o segurado, a seguradora, o corretor, o veículo e o período de vigência, mesmo quando cada seguradora monta o PDF de um jeito diferente.",
+      "O painel separa as apólices por cor: vigente (verde), vence em até 30 dias (amarelo) e vencida (vermelho), com filtros por seguradora, empresa, mês e situação.",
+      "Dashboard com total processado, vencimentos por mês, ranking por seguradora e alertas das apólices que vencem em 7 dias.",
+      "Exportação para Excel, geração de PDF e envio por e-mail, individual ou em massa por empresa.",
+    ],
+    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "Extração de PDF", "Tailwind CSS"],
     github: "",
     demo: "",
     video: "",
@@ -286,13 +300,14 @@ export const projetos: Projeto[] = [
   {
     titulo: "RELUZ Hub — Consulta Domínio",
     descricao:
-      "Dashboard do escritório que transforma a base do sistema contábil Domínio em indicadores: horas trabalhadas por colaborador, notas fiscais, lançamentos contábeis e faturamento. Um agente em Python lê o banco apenas para leitura, com consultas pré-definidas (nunca SQL livre), e a tela em Next.js exige login e permissão do setor Contábil.",
+      "Painel em Next.js (tela) e Python/Flask (servidor) que lê os dados do sistema contábil Domínio apenas para consulta, sem alterar nada, e os transforma em indicadores do escritório. Usa uma lista fixa de consultas prontas (nunca SQL livre) e exige login e permissão do setor Contábil.",
     recursos: [
-      "Horas trabalhadas por colaborador: tempo de sessão na Domínio por sistema, empresa e mês, conferindo com o relatório oficial da Domínio ao segundo.",
-      "Notas fiscais e lançamentos contábeis por empresa e período.",
+      "Horas trabalhadas de cada colaborador, por sistema (Contabilidade, Fiscal, Folha), por empresa e mês a mês. Os números conferem com o relatório oficial da Domínio, ao segundo.",
+      "Notas fiscais e lançamentos contábeis do período, por empresa.",
       "Colaboradores ativos, no total e mês a mês.",
-      "Faturamento mensal pelas notas de saída, sem as canceladas, conferindo ao centavo com a declaração oficial.",
-      "Segurança: acesso somente leitura que não trava a Domínio, lista fixa de consultas e limite de 50 mil linhas por resposta.",
+      "Faturamento mensal das empresas (notas de saída), sem as notas canceladas, conferindo ao centavo com a declaração oficial.",
+      "Resultados agrupados por colaborador ou por empresa, com busca, ordenação e exportação para Excel e PDF.",
+      "Segurança: leitura que não trava a Domínio e limite de 50 mil linhas por resposta.",
     ],
     tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "Docker", "SQL Anywhere", "Firebase Auth"],
     github: "",
@@ -301,6 +316,8 @@ export const projetos: Projeto[] = [
     galeria: [
       { src: "/projetos/dominio-consulta.webp", legenda: "Consulta Domínio: escolha da consulta e do período por competência ou datas" },
       { src: "/projetos/dominio-opcoes.webp", legenda: "Consultas disponíveis: horas no sistema, notas fiscais, lançamentos contábeis e funcionários ativos" },
+      { src: "/projetos/dominio-horas-empresa.webp", legenda: "Resultado de horas no sistema agrupado por empresa, com pessoas e horas de cada uma" },
+      { src: "/projetos/dominio-horas-colaborador.webp", legenda: "Resultado de horas no sistema por colaborador: dias, empresas atendidas e sistemas usados" },
     ],
     destaque: true,
   },
