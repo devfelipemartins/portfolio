@@ -1,12 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { projetos, type Projeto } from "@/data/portfolio";
+import { capaDoProjeto, projetos, type Projeto } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
+import ProjectModal from "./ProjectModal";
+import { ProjectLinks } from "./ProjectLinks";
 import TiltCard from "./motion/TiltCard";
 import { gsap } from "./motion/gsap";
 import { useMotion } from "./motion/useReveal";
-import { GitHubIcon, ExternalIcon, PlayIcon } from "./icons";
+import { ChevronRightIcon } from "./icons";
 
 const destaques = projetos.filter((p) => p.destaque);
 const demais = projetos.filter((p) => !p.destaque);
@@ -38,29 +41,38 @@ function CoverFallback() {
   );
 }
 
-function ProjectLinks({ projeto }: { projeto: Projeto }) {
+/** Botão que abre o modal; o ::after estica o clique para o card inteiro. */
+function OpenButton({ projeto, onOpen, className }: { projeto: Projeto; onOpen: (p: Projeto) => void; className: string }) {
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-x-4 text-sm">
-      {projeto.github && (
-        <a href={projeto.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
-          <GitHubIcon width={18} height={18} /> Código
-        </a>
-      )}
-      {projeto.demo && (
-        <a href={projeto.demo} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
-          <ExternalIcon width={18} height={18} /> Ver online
-        </a>
-      )}
-      {projeto.video && (
-        <a href={projeto.video} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-muted transition-colors hover:text-foreground">
-          <PlayIcon width={18} height={18} /> Vídeo
-        </a>
-      )}
-    </div>
+    <h3 className={className}>
+      <button
+        type="button"
+        onClick={() => onOpen(projeto)}
+        aria-haspopup="dialog"
+        className="cursor-pointer text-left after:absolute after:inset-0 after:z-[1] after:content-['']"
+      >
+        {projeto.titulo}
+      </button>
+    </h3>
+  );
+}
+
+function SeeMore({ projeto }: { projeto: Projeto }) {
+  const n = projeto.galeria?.length ?? 0;
+  return (
+    <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent-2">
+      Clique para ver mais{n > 1 ? ` · ${n} fotos` : ""}
+      <ChevronRightIcon
+        width={16}
+        height={16}
+        className="transition-transform duration-300 group-hover:translate-x-1"
+      />
+    </span>
   );
 }
 
 export default function Projects() {
+  const [aberto, setAberto] = useState<Projeto | null>(null);
   const ref = useMotion<HTMLElement>(({ root }) => {
     // Card(s) destaque: entram uma vez (sobem, revelam conteúdo) e ficam fixos.
     root.querySelectorAll<HTMLElement>("[data-feature-card]").forEach((card) => {
@@ -113,17 +125,23 @@ export default function Projects() {
         {destaques.length > 0 && (
           <div className="mt-10 space-y-10">
             {destaques.map((projeto) => (
-              <article
+              <TiltCard
                 key={projeto.titulo}
+                as="article"
                 data-feature-card
-                className="glass relative overflow-hidden rounded-2xl md:flex"
+                glow="cyan"
+                z={20}
+                className="group glass relative rounded-2xl md:flex"
               >
                 {/* Capa */}
                 <div className="relative aspect-video overflow-hidden md:aspect-auto md:w-1/2">
-                  <div data-feature-cover-inner className="absolute inset-0">
-                    {projeto.imagem ? (
+                  <div
+                    data-feature-cover-inner
+                    className="cover-zoom absolute inset-0 transition-transform duration-500 group-hover:scale-[1.06]"
+                  >
+                    {capaDoProjeto(projeto) ? (
                       <Image
-                        src={projeto.imagem}
+                        src={capaDoProjeto(projeto)!}
                         alt={projeto.titulo}
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
@@ -147,7 +165,11 @@ export default function Projects() {
 
                 {/* Conteúdo */}
                 <div className="flex flex-col p-8 md:w-1/2">
-                  <h3 className="text-xl font-bold sm:text-2xl">{projeto.titulo}</h3>
+                  <OpenButton
+                    projeto={projeto}
+                    onOpen={setAberto}
+                    className="text-xl font-bold sm:text-2xl"
+                  />
                   <p
                     data-feature-desc
                     className="mt-3 flex-1 text-sm leading-relaxed text-muted"
@@ -165,9 +187,11 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
+                  <SeeMore projeto={projeto} />
+                  <SeeMore projeto={projeto} />
                   <ProjectLinks projeto={projeto} />
                 </div>
-              </article>
+              </TiltCard>
             ))}
           </div>
         )}
@@ -196,9 +220,9 @@ export default function Projects() {
                   }`}
                 >
                   <div className="cover-zoom relative h-full w-full transition-transform duration-500 group-hover:scale-[1.06]">
-                    {projeto.imagem ? (
+                    {capaDoProjeto(projeto) ? (
                       <Image
-                        src={projeto.imagem}
+                        src={capaDoProjeto(projeto)!}
                         alt={projeto.titulo}
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
@@ -211,7 +235,7 @@ export default function Projects() {
                 </div>
 
                 <div className={`flex flex-1 flex-col p-6 ${largo ? "md:w-1/2 md:p-8" : ""}`}>
-                  <h3 className="text-xl font-bold">{projeto.titulo}</h3>
+                  <OpenButton projeto={projeto} onOpen={setAberto} className="text-xl font-bold" />
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
                     {projeto.descricao}
                   </p>
@@ -233,6 +257,7 @@ export default function Projects() {
           </div>
         )}
       </div>
+      {aberto && <ProjectModal projeto={aberto} onClose={() => setAberto(null)} />}
     </section>
   );
 }

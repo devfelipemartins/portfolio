@@ -243,9 +243,13 @@ export type Projeto = {
   github?: string;
   demo?: string; // link do site no ar
   video?: string; // link de vídeo (YouTube, Loom, etc.)
-  imagem?: string; // caminho do print (arquivo em /public/projetos)
+  imagem?: string; // capa; se ausente, usa a primeira foto da galeria
+  galeria?: FotoProjeto[]; // fotos exibidas no carrossel ao clicar no card
+  recursos?: string[]; // lista "O que ele faz" exibida no modal
   destaque?: boolean;
 };
+
+export type FotoProjeto = { src: string; legenda: string };
 
 export const projetos: Projeto[] = [
   {
@@ -256,7 +260,10 @@ export const projetos: Projeto[] = [
     github: "", // repositório privado
     demo: "", // sistema de uso interno
     video: "",
-    imagem: "/projetos/transporte-home.jpeg",
+    galeria: [
+      { src: "/projetos/frotas-orgaos.webp", legenda: "Tela inicial da Gestão de Frotas: escolha do órgão regulador" },
+      { src: "/projetos/frotas-vigencias.webp", legenda: "Dashboard de vigências da frota (ANTT): empresas a vencer, vencidas e vigentes" },
+    ],
     destaque: true,
   },
   {
@@ -267,7 +274,31 @@ export const projetos: Projeto[] = [
     github: "",
     demo: "",
     video: "",
-    imagem: "/projetos/apolices-dashboard-v2.jpeg",
+    galeria: [
+      { src: "/projetos/apolices-dashboard.webp", legenda: "Dashboard de apólices: indicadores e vencimentos por mês" },
+      { src: "/projetos/apolices-lista.webp", legenda: "Visão geral da lista, com filtros por status, seguradora, empresa e mês" },
+    ],
+    destaque: true,
+  },
+  {
+    titulo: "RELUZ Hub — Consulta Domínio",
+    descricao:
+      "Dashboard do escritório que transforma a base do sistema contábil Domínio em indicadores: horas trabalhadas por colaborador, notas fiscais, lançamentos contábeis e faturamento. Um agente em Python lê o banco apenas para leitura, com consultas pré-definidas (nunca SQL livre), e a tela em Next.js exige login e permissão do setor Contábil.",
+    recursos: [
+      "Horas trabalhadas por colaborador: tempo de sessão na Domínio por sistema, empresa e mês, conferindo com o relatório oficial da Domínio ao segundo.",
+      "Notas fiscais e lançamentos contábeis por empresa e período.",
+      "Colaboradores ativos, no total e mês a mês.",
+      "Faturamento mensal pelas notas de saída, sem as canceladas, conferindo ao centavo com a declaração oficial.",
+      "Segurança: acesso somente leitura que não trava a Domínio, lista fixa de consultas e limite de 50 mil linhas por resposta.",
+    ],
+    tecnologias: ["Next.js", "React", "TypeScript", "Python", "Flask", "Docker", "SQL Anywhere", "Firebase Auth"],
+    github: "",
+    demo: "",
+    video: "",
+    galeria: [
+      { src: "/projetos/dominio-consulta.webp", legenda: "Consulta Domínio: escolha da consulta e do período por competência ou datas" },
+      { src: "/projetos/dominio-opcoes.webp", legenda: "Consultas disponíveis: horas no sistema, notas fiscais, lançamentos contábeis e funcionários ativos" },
+    ],
     destaque: true,
   },
   {
@@ -279,5 +310,11 @@ export const projetos: Projeto[] = [
     demo: "https://devfelipemartins.com.br",
     video: "",
     imagem: "/projetos/portfolio-home.png",
+    galeria: [{ src: "/projetos/portfolio-home.png", legenda: "Página inicial do portfólio" }],
   },
 ];
+
+/** Capa do card: `imagem` ou a primeira foto da galeria. */
+export function capaDoProjeto(p: Projeto): string | undefined {
+  return p.imagem ?? p.galeria?.[0]?.src;
+}
