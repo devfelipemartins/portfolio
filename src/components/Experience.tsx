@@ -78,7 +78,21 @@ export default function Experience() {
                 {exp.empresa}
                 {exp.local ? ` · ${exp.local}` : ""}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{exp.descricao}</p>
+              {exp.topicos && exp.topicos.length > 0 ? (
+                <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">
+                  {exp.topicos.map((t) => (
+                    <li key={t} className="flex gap-2.5">
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-2"
+                      />
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm leading-relaxed text-muted">{exp.descricao}</p>
+              )}
               {exp.tecnologias && exp.tecnologias.length > 0 && (
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {exp.tecnologias.map((tec) => (

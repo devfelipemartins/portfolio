@@ -104,6 +104,8 @@ export type Experiencia = {
   periodo: string;
   local?: string;
   descricao: string;
+  /** Quando presente, é exibido em lista no lugar do texto corrido. */
+  topicos?: string[];
   tecnologias?: string[];
 };
 
@@ -114,12 +116,22 @@ export const experiencias: Experiencia[] = [
     periodo: "Out 2026 – Atual",
     local: "São Paulo, Brasil",
     descricao:
-      "Coordeno o time de automação (demandas e prazos pelo Jira, revisão de código) e atuo como Product Owner dos sistemas internos. Levanto requisitos com áreas internas e clientes e conduzo projetos da arquitetura à entrega. Integro APIs como SERPRO (Integra Contador) e InfoSimples. Mantenho o ambiente de produção: Docker Compose, Nginx, Git com submódulos e testes de recuperação de desastres. Administro Microsoft 365, Azure e Entra ID. Apresento as soluções de automação a clientes.",
+      "Coordeno o time de automação (demandas e prazos pelo Jira, revisão de código) e atuo como Product Owner dos sistemas internos. Levanto requisitos com áreas internas e clientes e conduzo projetos da arquitetura à entrega. Integro APIs como SERPRO (Integra Contador) e InfoSimples. Mantenho o ambiente de produção: Docker Compose, Nginx, Git com submódulos e testes de recuperação de desastres. Administro Microsoft 365, Azure e Entra ID. Desenvolvo automações utilizando agentes de IA. Apresento as soluções de automação a clientes.",
+    topicos: [
+      "Coordeno o time de automação (demandas e prazos pelo Jira, revisão de código) e atuo como Product Owner dos sistemas internos.",
+      "Levanto requisitos com áreas internas e clientes e conduzo projetos da arquitetura à entrega.",
+      "Desenvolvo automações utilizando agentes de IA.",
+      "Integro APIs como SERPRO (Integra Contador) e InfoSimples.",
+      "Mantenho o ambiente de produção: Docker Compose, Nginx, Git com submódulos e testes de recuperação de desastres.",
+      "Administro Microsoft 365, Azure e Entra ID.",
+      "Apresento as soluções de automação a clientes.",
+    ],
     tecnologias: [
       "Python",
       "React",
       "Next.js",
       "TypeScript",
+      "IA e agentes",
       "Docker Compose",
       "Nginx",
       "Jira",
