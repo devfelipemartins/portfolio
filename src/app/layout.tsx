@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { perfil } from "@/data/portfolio";
+import { perfil, contatos } from "@/data/portfolio";
+import { nomeCompleto, siteTitle, siteDescription, siteUrl } from "@/lib/site";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 
 // Script anti-flash: define o tema antes da pintura (executado no HTML do SSR).
@@ -17,12 +18,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const nomeCompleto = `${perfil.nome} ${perfil.sobrenome}`;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: nomeCompleto,
+  jobTitle: perfil.cargo,
+  url: siteUrl,
+  sameAs: [contatos.github, contatos.linkedin].filter(Boolean),
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b10" },
+  ],
+};
 
 export const metadata: Metadata = {
-  title: `${nomeCompleto} | ${perfil.cargo}`,
-  description: perfil.resumo,
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  alternates: { canonical: "/" },
   keywords: [
+    "analista de sistemas",
     "desenvolvedor full stack",
     "portfólio",
     "Next.js",
@@ -33,15 +51,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: nomeCompleto }],
   openGraph: {
-    title: `${nomeCompleto} | ${perfil.cargo}`,
-    description: perfil.resumo,
+    title: siteTitle,
+    description: siteDescription,
     type: "website",
     locale: "pt_BR",
+    url: "/",
+    siteName: nomeCompleto,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${nomeCompleto} | ${perfil.cargo}`,
-    description: perfil.resumo,
+    title: siteTitle,
+    description: siteDescription,
   },
 };
 
@@ -56,6 +76,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
