@@ -69,6 +69,8 @@ export const skills: { categoria: string; itens: string[] }[] = [
       "Docker",
       "Docker Compose",
       "Nginx",
+      "n8n",
+      "Antigravity",
       "Git & GitHub",
       "Jira",
       "Microsoft 365",
