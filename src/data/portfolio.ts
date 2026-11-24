@@ -266,7 +266,7 @@ export const projetos: Projeto[] = [
       "Relatórios: exportação dos resultados em Excel e PDF.",
       "Acesso: login corporativo via Microsoft/Office 365.",
     ],
-    tecnologias: ["Next.js","Python","PostgreSQL","Web Scraping","Agendamento de tarefas","Excel/PDF"],
+    tecnologias: ["Next.js","TypeScript","Tailwind CSS","Python","Flask","PostgreSQL","Selenium","Playwright","APScheduler","Firebase Auth"],
     github: "", // repositório privado
     demo: "", // sistema de uso interno
     video: "",
@@ -290,7 +290,7 @@ export const projetos: Projeto[] = [
       "Filtros: por seguradora, empresa, mês e situação, com um clique nos cards e gráficos.",
       "Saídas: exportação para Excel, geração de PDF e envio por e-mail, individual ou em massa por empresa.",
     ],
-    tecnologias: ["Next.js","Python","Extração de PDF","Automação","Excel/PDF"],
+    tecnologias: ["Next.js","TypeScript","Tailwind CSS","Python","Flask","pdfplumber","PyMuPDF","openpyxl","Firebase Auth"],
     github: "",
     demo: "",
     video: "",
@@ -315,7 +315,7 @@ export const projetos: Projeto[] = [
       "Visões e relatórios: agrupa por colaborador ou por empresa, com busca, ordenação e exportação para Excel e PDF.",
       "Segurança: somente leitura, sem travar a Domínio, com consultas pré-definidas (nunca SQL livre), limite de 50 mil linhas por resposta e acesso restrito ao setor Contábil por login.",
     ],
-    tecnologias: ["Next.js","Python","SQL Anywhere","Docker","Firebase Auth","Somente leitura"],
+    tecnologias: ["Next.js","TypeScript","Python","Flask","SQL Anywhere","Docker","Firebase Auth"],
     github: "",
     demo: "",
     video: "",
