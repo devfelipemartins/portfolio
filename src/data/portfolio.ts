@@ -254,7 +254,7 @@ export type FotoProjeto = { src: string; legenda: string };
 
 export const projetos: Projeto[] = [
   {
-    titulo: "RELUZ Hub — Gestão de Frotas",
+    titulo: "Gestão de Frotas",
     descricao:
       "Sistema em Next.js e Python/Flask, com banco PostgreSQL, que concentra a situação dos veículos e motoristas das empresas de transporte clientes junto aos órgãos reguladores (ARTESP, ANTT, EMTU, SPTrans, Cadastur e Senatran). Login corporativo via Microsoft/Office 365.",
     recursos: [
@@ -278,7 +278,7 @@ export const projetos: Projeto[] = [
     destaque: true,
   },
   {
-    titulo: "RELUZ Hub — Gestão de Apólices",
+    titulo: "Gestão de Apólices",
     descricao:
       "Sistema em Next.js e Python/Flask que lê automaticamente os PDFs das apólices de seguro guardados numa pasta da rede e organiza tudo em um painel de indicadores, com alertas de vencimento, exportação para Excel e geração de PDF.",
     recursos: [
@@ -301,7 +301,7 @@ export const projetos: Projeto[] = [
     destaque: true,
   },
   {
-    titulo: "RELUZ Hub — Consulta Domínio",
+    titulo: "Consulta Domínio",
     descricao:
       "Painel em Next.js (tela) e Python/Flask (servidor) que lê os dados do sistema contábil Domínio apenas para consulta, sem alterar nada, e os transforma em indicadores do escritório. Usa uma lista fixa de consultas prontas (nunca SQL livre) e exige login e permissão do setor Contábil.",
     recursos: [
